@@ -45,7 +45,7 @@
                             <h2>Manage <b>Students</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="#" class="btn btn-success" ><i
+                            <a href="/student/create" class="btn btn-success" ><i
                                     class="las la-plus"></i> <span>Add New Student</span></a>
                             <a href="#" class="btn btn-danger" ><i
                                     class="las la-trash-alt "></i> <span>Delete</span></a>

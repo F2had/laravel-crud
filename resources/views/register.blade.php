@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet"
         href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link " aria-current="page" href="/register">Register</a>
+                            <a class="nav-link " aria-current="page" href="/">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -32,30 +32,36 @@
     </header>
     <div class="container">
 
-        @if (session()->has('message'))
-            <div class="alert alert-success">
-                {{ session()->get('message') }}
-            </div>
-        @endif
-
-
+      
         <div>
 
-            <h2 class="text-center">Welcome Back!</h2>
-            <form action="" method="post">
-
+            <h2 class="text-center">Create an Account</h2>
+            <form action="/register" method="post">
+                @method('post')
+                @csrf
+                <div class="mb-3">
+                    <label for="name"  class="form-label">Name</label>
+                    <input type="text" value="{{ old('name') }}" name="name" class="form-control" id="name">
+                    @error('name')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" name="emial" class="form-control" id="exampleInputEmail1"
+                    <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1"
                         aria-describedby="emailHelp">
+                    @error('email')
+                        <div class="error text-danger"> {{ $message }}</div>
+                    @enderror
                 </div>
-
-
 
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" class="form-control" id="password">
+                    @error('password')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
 

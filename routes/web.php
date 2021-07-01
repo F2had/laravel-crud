@@ -15,11 +15,18 @@ use Illuminate\Support\Facades\Route;
 
 use  App\Http\Controllers\StudentController;
 use  App\Http\Controllers\CourseController;
+use  App\Http\Controllers\UserController;
+
 
 Route::get('/', function () {
     return view('login');
-});
+})->name('login');
 
+
+
+Route::get('register', [UserController::class, 'create'] )->name('register');
+
+Route::post('register', [UserController::class, 'store'] );
 
 
 Route::resource('student', StudentController::class);
