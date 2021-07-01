@@ -16,19 +16,24 @@ use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\StudentController;
 use  App\Http\Controllers\CourseController;
 use  App\Http\Controllers\UserController;
-
+use  App\Http\Controllers\SessionController;
 
 Route::get('/', function () {
     return view('login');
-})->name('login');
+})->name('login')->middleware('guest');;
 
 
 
-Route::get('register', [UserController::class, 'create'] )->name('register');
 
-Route::post('register', [UserController::class, 'store'] );
+Route::get('register', [UserController::class, 'create'])->name('register')->middleware('guest');
+
+Route::post('register', [UserController::class, 'store'])->middleware('guest');
+
+Route::get('logout', [SessionController::class, 'logout'])->middleware('auth');
 
 
-Route::resource('student', StudentController::class);
+Route::post('login', [SessionController::class, 'login'])->middleware('guest');
 
-Route::resource('course', CourseController::class);
+Route::resource('student', StudentController::class)->middleware('auth');
+
+Route::resource('course', CourseController::class)->middleware('auth');

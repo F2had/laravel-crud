@@ -38,17 +38,24 @@
             </div>
         @endif
 
+        @if (session()->has('error'))
+            <div class="alert alert-danger">
+                {{ session()->get('error') }}
+            </div>
+        @endif
 
         <div>
 
             <h2 class="text-center">Welcome Back!</h2>
-            <form action="" method="post">
-
-
+            <form action="/login" method="post">
+                @csrf
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" name="emial" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp">
+                    <input type="email" value="{{ old('email') }}" name="email" class="form-control"
+                        id="exampleInputEmail1" aria-describedby="emailHelp">
+                    @error('email')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
 
@@ -56,10 +63,13 @@
                 <div class="mb-3">
                     <label for="password" class="form-label">Password</label>
                     <input type="password" name="password" class="form-control" id="password">
+                    @error('password')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
 
 
-                <button type="submit" class="btn btn-outline-primary">Submit</button>
+                <button type="submit" class="btn btn-outline-primary">Login</button>
 
             </form>
         </div>

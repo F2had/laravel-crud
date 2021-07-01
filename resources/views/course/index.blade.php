@@ -28,6 +28,10 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/course">Course</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/logout"><span
+                                    class="text-danger">Logout</span></a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -45,10 +49,9 @@
                             <h2>Manage <b>Courses</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="#" class="btn btn-success" ><i
-                                    class="las la-plus"></i> <span>Add New Course</span></a>
-                            <a href="#" class="btn btn-danger" ><i
-                                    class="las la-trash-alt "></i> <span>Delete</span></a>
+                            <a href="#" class="btn btn-success"><i class="las la-plus"></i> <span>Add New
+                                    Course</span></a>
+                            <a href="#" class="btn btn-danger"><i class="las la-trash-alt "></i> <span>Delete</span></a>
                         </div>
                     </div>
 
@@ -63,7 +66,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                           
+
                             <tr>
 
                                 <td>Thomas Hardy</td>
@@ -71,10 +74,8 @@
                                 <td>89 Chiaroscuro Rd, Portland, USA</td>
                                 <td>(171) 555-2222</td>
                                 <td>
-                                    <a href="#" class="edit" ><i
-                                            class="las la-edit la-2x"></i></a>
-                                    <a href="#" class="delete" ><i
-                                            class="las la-trash-alt la-2x"></i></a>
+                                    <a href="#" class="edit"><i class="las la-edit la-2x"></i></a>
+                                    <a href="#" class="delete"><i class="las la-trash-alt la-2x"></i></a>
                                 </td>
                             </tr>
 
