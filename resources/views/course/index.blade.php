@@ -61,7 +61,6 @@
                         <div class="col-sm-6">
                             <a href="/course/create" class="btn btn-success"><i class="las la-plus"></i> <span>Add New
                                     Course</span></a>
-                            <a href="#" class="btn btn-danger"><i class="las la-trash-alt "></i> <span>Delete</span></a>
                         </div>
                     </div>
 
@@ -85,7 +84,8 @@
                                     <td>{{ $course->credit }}</td>
                                     <td>{{ $course->department }}</td>
                                     <td>
-                                        <a href="#" class="d-inline  m-0 p-0"><i class="las la-edit la-2x"></i></a>
+                                        <a href="course/edit/{{ $course->id }}" class="d-inline  m-0 p-0"><i
+                                                class="las la-edit la-2x"></i></a>
                                         <form action="/course/{{ $course->id }}" method="post"
                                             class="d-inline m-0 p-0">
                                             @method('delete')

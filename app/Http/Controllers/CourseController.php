@@ -48,16 +48,6 @@ class CourseController extends Controller
         return redirect('/course')->with('message', 'Course Added');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -67,7 +57,9 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
-        //
+        $course = Course::find($id);
+
+        return view('course.edit', compact('course'));
     }
 
     /**
@@ -79,7 +71,20 @@ class CourseController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'credit' => ['required', 'numeric'],
+            'department' => ['required']
+        ]);
+
+
+        Course::where('id', $request->id)->update([
+            'name' => $request->name,
+            'credit' => $request->credit,
+            'department' => $request->department
+        ]);
+
+        return redirect('course')->with('message', 'Course updated!');
     }
 
     /**

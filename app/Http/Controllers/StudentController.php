@@ -51,16 +51,6 @@ class StudentController extends Controller
         return redirect('student')->with('message', 'Student Added!');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
@@ -70,7 +60,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {
-        //
+        $student = Student::find($id);
+
+        return view('student.edit', compact('student'));
     }
 
     /**
@@ -82,7 +74,22 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+            'phone' => ['required'],
+            'department' => ['required']
+        ]);
+
+
+        Student::where('id', $request->id)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'department' => $request->department
+        ]);
+
+        return redirect('student')->with('message', 'Student updated!');
     }
 
     /**

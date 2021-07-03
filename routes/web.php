@@ -35,5 +35,7 @@ Route::get('logout', [SessionController::class, 'logout'])->middleware('auth');
 Route::post('login', [SessionController::class, 'login'])->middleware('guest');
 
 Route::resource('student', StudentController::class)->middleware('auth');
+Route::get('student/edit/{id}', [StudentController::class, 'edit'])->middleware('auth');
 
+Route::get('course/edit/{id}', [CourseController::class, 'edit'])->middleware('auth');
 Route::resource('course', CourseController::class)->middleware('auth');
