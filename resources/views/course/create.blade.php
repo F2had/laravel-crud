@@ -37,47 +37,35 @@
 
         <div>
 
-            <h2>Add a new Student</h2>
-            <form action="/student" method="post">
+            <h2>Add a new Course</h2>
+            <form action="/course" method="post">
                 @csrf
-
+                @method('post')
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" value="{{ old('name') }}" name="name" class="form-control" id="name">
+                    <input type="text" name="name" class="form-control" id="name">
                     @error('name')
                         <div class="error text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" value="{{ old('email') }}" name="email" class="form-control"
-                        id="exampleInputEmail1" aria-describedby="emailHelp">
-                    @error('email')
+                    <label for="credit" class="form-label">Credit</label>
+                    <input type="number" name="credit" class="form-control" id="credit">
+                    @error('credit')
                         <div class="error text-danger">{{ $message }}</div>
                     @enderror
                 </div>
-
-                <div class="mb-3">
-                    <label for="phone" class="form-label">Phone</label>
-                    <input type="text" value="{{ old('phone') }}" name="phone" class="form-control" id="phone">
-                    @error('phone')
-                        <div class="error text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
 
                 <div class="mb-3">
                     <label for="department" class="form-label">Department</label>
-                    <input type="text" value="{{ old('department') }}" name="department" class="form-control"
-                        id="department">
+                    <input type="text" name="department" class="form-control" id="department">
                     @error('department')
                         <div class="error text-danger">{{ $message }}</div>
                     @enderror
                 </div>
 
-
-                <button type="submit" class="btn btn-outline-primary">Submit</button>
+                <button type="submit" class="btn btn-outline-primary">Add</button>
 
             </form>
         </div>

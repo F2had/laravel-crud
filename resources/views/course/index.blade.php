@@ -39,6 +39,16 @@
     </header>
     <div class="container-fluid m-1">
 
+        <div class="container text-center">
+            <div>
+                @if (session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+            </div>
+        </div>
+
         <div class="table-responsive pt-3">
 
             <div class="table-wrapper">
@@ -49,7 +59,7 @@
                             <h2>Manage <b>Courses</b></h2>
                         </div>
                         <div class="col-sm-6">
-                            <a href="#" class="btn btn-success"><i class="las la-plus"></i> <span>Add New
+                            <a href="/course/create" class="btn btn-success"><i class="las la-plus"></i> <span>Add New
                                     Course</span></a>
                             <a href="#" class="btn btn-danger"><i class="las la-trash-alt "></i> <span>Delete</span></a>
                         </div>
@@ -58,27 +68,34 @@
                     <table class="table table-striped table-hover">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Name</th>
-                                <th>Email</th>
-                                <th>Address</th>
-                                <th>Phone</th>
+                                <th>Credit</th>
+                                <th>Department</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <tr>
+                            @foreach ($courses as $course)
+                                <tr>
 
-                                <td>Thomas Hardy</td>
-                                <td>thomashardy@mail.com</td>
-                                <td>89 Chiaroscuro Rd, Portland, USA</td>
-                                <td>(171) 555-2222</td>
-                                <td>
-                                    <a href="#" class="edit"><i class="las la-edit la-2x"></i></a>
-                                    <a href="#" class="delete"><i class="las la-trash-alt la-2x"></i></a>
-                                </td>
-                            </tr>
-
+                                    <td>{{ $course->id }}</td>
+                                    <td>{{ $course->name }}</td>
+                                    <td>{{ $course->credit }}</td>
+                                    <td>{{ $course->department }}</td>
+                                    <td>
+                                        <a href="#" class="d-inline  m-0 p-0"><i class="las la-edit la-2x"></i></a>
+                                        <form action="/course/{{ $course->id }}" method="post"
+                                            class="d-inline m-0 p-0">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger"><i
+                                                    class="las la-trash-alt "></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
 
                         </tbody>
                     </table>

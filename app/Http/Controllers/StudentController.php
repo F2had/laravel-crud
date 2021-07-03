@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Student;
 
 class StudentController extends Controller
 {
@@ -13,8 +14,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        return view('student.index');
-        
+        $students = Student::all();
+        return view('student.index', compact('students'));
     }
 
     /**
@@ -24,7 +25,8 @@ class StudentController extends Controller
      */
     public function create()
     {
-         return view('student.create');
+
+        return view('student.create');
     }
 
     /**
@@ -35,7 +37,18 @@ class StudentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+
+        $request->validate([
+            'name' => ['required'],
+            'email' => ['required', 'email', 'unique:students,email'],
+            'phone' => ['required'],
+            'department' => ['required']
+        ]);
+
+        Student::create($request->all());
+
+        return redirect('student')->with('message', 'Student Added!');
     }
 
     /**
@@ -80,6 +93,8 @@ class StudentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Student::destroy($id);
+
+        return redirect()->back()->with('message', 'Student deleted!');
     }
 }

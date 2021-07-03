@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Course;
 
 class CourseController extends Controller
 {
@@ -13,7 +14,9 @@ class CourseController extends Controller
      */
     public function index()
     {
-        return view('course.index');
+        $courses = Course::all();
+
+        return view('course.index', compact('courses'));
     }
 
     /**
@@ -23,7 +26,7 @@ class CourseController extends Controller
      */
     public function create()
     {
-        //
+        return view('course.create');
     }
 
     /**
@@ -34,7 +37,15 @@ class CourseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'credit' => ['required', 'numeric'],
+            'department' => ['required']
+        ]);
+
+        Course::create($request->all());
+
+        return redirect('/course')->with('message', 'Course Added');
     }
 
     /**
@@ -79,6 +90,7 @@ class CourseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Course::destroy($id);
+        return redirect()->back()->with('message', 'Course Deleted!');
     }
 }

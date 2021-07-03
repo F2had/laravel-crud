@@ -29,7 +29,8 @@
                             <a class="nav-link" aria-current="page" href="/course">Course</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/logout"><span class="text-danger">Logout</span></a>
+                            <a class="nav-link" aria-current="page" href="/logout"><span
+                                    class="text-danger">Logout</span></a>
                         </li>
                     </ul>
                 </div>
@@ -37,6 +38,16 @@
         </nav>
     </header>
     <div class="container-fluid m-1">
+
+        <div class="container">
+            <div>
+                @if (session()->has('message'))
+                    <div class="alert alert-success">
+                        {{ session()->get('message') }}
+                    </div>
+                @endif
+            </div>
+        </div>
 
         <div class="table-responsive pt-3">
 
@@ -59,24 +70,32 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Address</th>
                                 <th>Phone</th>
+                                <th>Department</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <tr>
+                            @foreach ($students as $student)
+                                <tr>
 
-                                <td>Thomas Hardy</td>
-                                <td>thomashardy@mail.com</td>
-                                <td>89 Chiaroscuro Rd, Portland, USA</td>
-                                <td>(171) 555-2222</td>
-                                <td>
-                                    <a href="#" class="edit"><i class="las la-edit la-2x"></i></a>
-                                    <a href="#" class="delete"><i class="las la-trash-alt la-2x"></i></a>
-                                </td>
-                            </tr>
+                                    <td>{{ $student->name }}</td>
+                                    <td>{{ $student->email }}</td>
+                                    <td>{{ $student->phone }}</td>
+                                    <td>{{ $student->department }}</td>
+                                    <td>
+                                        <a href="#" class="edit"><i class="las la-edit la-2x"></i></a>
+                                        <form action="/student/{{ $student->id }}" method="post"
+                                            class="d-inline m-0 p-0">
+                                            @method('delete')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger"><i
+                                                    class="las la-trash-alt "></i></button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @endforeach
 
 
                         </tbody>
