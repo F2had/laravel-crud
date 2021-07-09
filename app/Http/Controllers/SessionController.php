@@ -19,6 +19,7 @@ class SessionController extends Controller
 
 
         if (!Auth::attempt($login)) {
+            $token = auth()->user()->createToken('Token')->accessToken;
             return redirect()->back()->withInput()->with('error', 'Invlaid credentials!');
         }
 

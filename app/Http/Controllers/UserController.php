@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Models\User;
 
+
 class UserController extends Controller
 {
 
@@ -39,11 +40,12 @@ class UserController extends Controller
 
 
 
-        User::create([
+       $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password']
         ]);
+        $token = $user->createToken("Token")->accessToken;
 
         return redirect()->route('login')->with('message', 'Account created');
     }
