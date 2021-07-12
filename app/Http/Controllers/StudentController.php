@@ -39,11 +39,17 @@ class StudentController extends Controller
     {
 
 
+
+
         $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email', 'unique:students,email'],
             'phone' => ['required'],
-            'department' => ['required']
+            'department' => ['required'],
+            'address' => ['required'],
+            'country' => ['required'],
+            'nationality' => ['required'],
+            'state' => ['required']
         ]);
 
         Student::create($request->all());
@@ -74,12 +80,19 @@ class StudentController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+       
         $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
-            'department' => ['required']
+            'department' => ['required'],
+            'address' => ['required'],
+            'country' => ['required'],
+            'nationality' => ['required'],
+            'state' => ['required']
         ]);
+
 
 
         Student::where('id', $request->id)->update([

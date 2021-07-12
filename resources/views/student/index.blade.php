@@ -13,7 +13,7 @@
 <body>
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -29,6 +29,9 @@
                             <a class="nav-link" aria-current="page" href="/course">Course</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" aria-current="page" href="/enrollment">Enrollment</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/logout"><span
                                     class="text-danger">Logout</span></a>
                         </li>
@@ -38,9 +41,9 @@
         </nav>
     </header>
     <div class="container-fluid m-1">
-
-        <div class="container">
-            <div>
+        <hr>
+        <div class="container d-flex justify-content-center text-center">
+            <div class="w-25">
                 @if (session()->has('message'))
                     <div class="alert alert-success">
                         {{ session()->get('message') }}
@@ -71,6 +74,10 @@
                                 <th>Email</th>
                                 <th>Phone</th>
                                 <th>Department</th>
+                                <th>Address</th>
+                                <th>State</th>
+                                <th>Country</th>
+                                <th>Nationality</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -83,8 +90,13 @@
                                     <td>{{ $student->email }}</td>
                                     <td>{{ $student->phone }}</td>
                                     <td>{{ $student->department }}</td>
+                                    <td>{{ $student->address }}</td>
+                                    <td>{{ $student->state }}</td>
+                                    <td>{{ $student->country }}</td>
+                                    <td>{{ $student->nationality }}</td>
                                     <td>
-                                        <a href="/student/edit/{{ $student->id }}" class="edit"><i class="las la-edit la-2x"></i></a>
+                                        <a href="/student/edit/{{ $student->id }}" class="edit"><i
+                                                class="las la-edit la-2x"></i></a>
                                         <form action="/student/{{ $student->id }}" method="post"
                                             class="d-inline m-0 p-0">
                                             @method('delete')

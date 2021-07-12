@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 
 use  App\Http\Controllers\StudentController;
 use  App\Http\Controllers\CourseController;
+use App\Http\Controllers\EnrollmentController;
 use  App\Http\Controllers\UserController;
 use  App\Http\Controllers\SessionController;
 
@@ -39,3 +40,5 @@ Route::get('student/edit/{id}', [StudentController::class, 'edit'])->middleware(
 
 Route::get('course/edit/{id}', [CourseController::class, 'edit'])->middleware('auth');
 Route::resource('course', CourseController::class)->middleware('auth');
+
+Route::resource('enrollment', EnrollmentController::class)->middleware('auth');

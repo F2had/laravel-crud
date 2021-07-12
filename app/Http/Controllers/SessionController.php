@@ -18,13 +18,13 @@ class SessionController extends Controller
         ]);
 
 
-        if (!Auth::attempt($login)) {
+        if (auth()->attempt($login)) {
             $token = auth()->user()->createToken('Token')->accessToken;
-            return redirect()->back()->withInput()->with('error', 'Invlaid credentials!');
+            return redirect('/student')->with('message', 'Logged In!');
         }
 
 
-        return redirect('/student')->with('message', 'Logged In!');
+        return redirect()->back()->withInput()->with('error', 'Invlaid credentials!');
     }
 
     public function logout(Request $request)

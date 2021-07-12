@@ -13,6 +13,15 @@ class Student extends Model
         'name',
         'email',
         'department',
-        'phone'
+        'phone',
+        'address',
+        'state',
+        'country',
+        'nationality'
     ];
+
+    public function courses()
+    {
+        return $this->belongsToMany(Course::class)->using(StudentCourse::class);
+    }
 }

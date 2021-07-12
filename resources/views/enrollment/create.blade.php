@@ -28,7 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/course">Course</a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/enrollment">Enrollment</a>
                         </li>
                     </ul>
@@ -38,41 +38,8 @@
     </header>
     <div class="container">
 
-        <div>
-
-            <h2>Add a new Course</h2>
-            <form action="/course" method="post">
-                @csrf
-                @method('post')
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" name="name" class="form-control" id="name">
-                    @error('name')
-                        <div class="error text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="credit" class="form-label">Credit</label>
-                    <input type="number" name="credit" class="form-control" id="credit">
-                    @error('credit')
-                        <div class="error text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="mb-3">
-                    <label for="department" class="form-label">Department</label>
-                    <input type="text" name="department" class="form-control" id="department">
-                    @error('department')
-                        <div class="error text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <button type="submit" class="btn btn-outline-primary">Add</button>
-
-            </form>
-        </div>
-
+        <h1>Add Enrollment</h1>
+      
 
     </div>
 
