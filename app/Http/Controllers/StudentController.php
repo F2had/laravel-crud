@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
 use Illuminate\Http\Request;
 use App\Models\Student;
+
 
 class StudentController extends Controller
 {
@@ -14,6 +16,8 @@ class StudentController extends Controller
      */
     public function index()
     {
+        // $course = Course::find('1');
+        // ddd($course->students[0]->name);
         $students = Student::all();
         return view('student.index', compact('students'));
     }
@@ -81,7 +85,7 @@ class StudentController extends Controller
     public function update(Request $request, $id)
     {
 
-       
+
         $request->validate([
             'name' => ['required'],
             'email' => ['required', 'email'],
