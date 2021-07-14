@@ -28,7 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/course">Course</a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item active">
                             <a class="nav-link" aria-current="page" href="/enrollment">Enrollment</a>
                         </li>
                     </ul>
@@ -36,44 +36,39 @@
             </div>
         </nav>
     </header>
-    <div class="container">
 
-         @include('message')
+    <div class="container">
+        @include('message')
+
         <div>
 
-            <h2>Edit a Course</h2>
-            <form action="/course/update" method="POST">
-                @csrf
-                @method('PUT')
-                <input type="hidden" name="id" value="{{ $course->id }}">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" value="{{ $course->name }}" name="name" class="form-control" id="name">
-                    @error('name')
-                        <div class="error text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+            <h2 class="pt-3">Student Enrollments</h2>
 
-                <div class="mb-3">
-                    <label for="credit" class="form-label">Credit</label>
-                    <input type="number" value="{{ $course->credit }}" name="credit" class="form-control" id="credit">
-                    @error('credit')
-                        <div class="error text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>{{ $student->name }}</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                <div class="mb-3">
-                    <label for="department" class="form-label">Department</label>
-                    <input type="text" value="{{ $course->department }}" name="department" class="form-control"
-                        id="department">
-                    @error('department')
-                        <div class="error text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
+                    @if (!$student->courses->isEmpty())
+                        @foreach ($student->courses as $studentCourses)
+                            <tr>
+                                <td>{{ $studentCourses->name }}</td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <tr>
+                            <td>Not enrolled in any subject(s)</td>
+                        </tr>
+                    @endif
 
-                <button type="submit" class="btn btn-outline-primary">Update</button>
 
-            </form>
+                </tbody>
+            </table>
+
+
         </div>
 
 

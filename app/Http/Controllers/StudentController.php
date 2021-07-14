@@ -16,8 +16,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-        // $course = Course::find('1');
-        // ddd($course->students[0]->name);
+   
         $students = Student::all();
         return view('student.index', compact('students'));
     }

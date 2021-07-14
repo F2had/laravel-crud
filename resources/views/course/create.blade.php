@@ -38,6 +38,8 @@
     </header>
     <div class="container">
 
+         @include('message')
+
         <div>
 
             <h2>Add a new Course</h2>

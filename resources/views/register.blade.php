@@ -32,7 +32,7 @@
     </header>
     <div class="container">
 
-      
+        @include('message')
         <div>
 
             <h2 class="text-center">Create an Account</h2>
@@ -40,7 +40,7 @@
                 @method('post')
                 @csrf
                 <div class="mb-3">
-                    <label for="name"  class="form-label">Name</label>
+                    <label for="name" class="form-label">Name</label>
                     <input type="text" value="{{ old('name') }}" name="name" class="form-control" id="name">
                     @error('name')
                         <div class="error text-danger">{{ $message }}</div>
@@ -49,8 +49,8 @@
 
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" value="{{ old('email') }}" name="email" class="form-control" id="exampleInputEmail1"
-                        aria-describedby="emailHelp">
+                    <input type="email" value="{{ old('email') }}" name="email" class="form-control"
+                        id="exampleInputEmail1" aria-describedby="emailHelp">
                     @error('email')
                         <div class="error text-danger"> {{ $message }}</div>
                     @enderror

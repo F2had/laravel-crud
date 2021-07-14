@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Course;
+use App\Models\Student;
+use App\Models\StudentCourse;
 use Illuminate\Http\Request;
 
 class EnrollmentController extends Controller
@@ -13,7 +16,10 @@ class EnrollmentController extends Controller
      */
     public function index()
     {
-        return view('enrollment.index');
+
+        $courses = Course::withCount('students')->get();
+
+        return view('enrollment.index', compact('courses'));
     }
 
     /**
@@ -23,7 +29,9 @@ class EnrollmentController extends Controller
      */
     public function create()
     {
-        return view('enrollment.create');
+        $courses = Course::all();
+        $students = Student::all();
+        return view('enrollment.create', compact('students', 'courses'));
     }
 
     /**
@@ -34,7 +42,23 @@ class EnrollmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'student' => ['required'],
+            'course' => ['required'],
+        ]);
+        try {
+            StudentCourse::create([
+                'student_id' => $request->student,
+                'course_id' => $request->course
+            ]);
+        } catch (\Exception $e) {
+
+            $error = $e->getMessage();
+            return redirect('enrollment/create')->with('error', $error);
+        }
+
+        return redirect('enrollment')->with('message', 'Enrollment Added!');
     }
 
     /**
@@ -45,7 +69,8 @@ class EnrollmentController extends Controller
      */
     public function show($id)
     {
-        //
+        $student = Student::find($id);
+        return view('enrollment.view', compact('student'));
     }
 
     /**
@@ -79,6 +104,6 @@ class EnrollmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        ddd($id);
     }
 }

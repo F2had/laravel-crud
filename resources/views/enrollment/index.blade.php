@@ -23,13 +23,13 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Student</a>
+                            <a class="nav-link " aria-current="page" href="/student">Student</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/course">Course</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/enrollment">Enrollment</a>
+                            <a class="nav-link active" aria-current="page" href="/enrollment">Enrollment</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/logout"><span
@@ -41,19 +41,58 @@
         </nav>
     </header>
     <div class="container-fluid m-1">
+
+        @include('message')
         <hr>
-        <div class="container d-flex justify-content-center text-center">
-            <div class="w-25">
-                @if (session()->has('message'))
-                    <div class="alert alert-success">
-                        {{ session()->get('message') }}
+
+
+        <div class="table-responsive pt-3">
+
+            <div class="table-wrapper">
+
+                <div class="table-title">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h2>Manage <b>Enrollments</b></h2>
+                        </div>
+                        <div class="col-sm-6">
+                            <a href="/enrollment/create" class="btn btn-success"><i class="las la-plus"></i> <span>Add
+                                    New
+                                    Enrollment</span></a>
+                        </div>
                     </div>
-                @endif
+
+                    <table class="table table-striped table-hover">
+                        @foreach ($courses as $course)
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center; background-color: rgb(155, 165, 163)">
+                                        {{ $course->name }}
+                                        ({{ $course->students_count }})</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                @foreach ($course->students as $student)
+                                    <tr>
+                                        <td style="text-align:center">{{ $student->name }}</td>
+                                    </tr>
+                                @endforeach
+
+
+
+
+
+                            </tbody>
+                        @endforeach
+                    </table>
+
+                </div>
+
             </div>
+
         </div>
 
-        <h1>Enrollments</h1>
-        <a href="/enrollment/create">Add</a>
 
 
     </div>

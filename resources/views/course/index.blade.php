@@ -28,7 +28,7 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/course">Course</a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/enrollment">Enrollment</a>
                         </li>
                         <li class="nav-item">
@@ -42,15 +42,7 @@
     </header>
     <div class="container-fluid m-1">
 
-        <div class="container text-center">
-            <div>
-                @if (session()->has('message'))
-                    <div class="alert alert-success">
-                        {{ session()->get('message') }}
-                    </div>
-                @endif
-            </div>
-        </div>
+        @include('message')
 
         <div class="table-responsive pt-3">
 

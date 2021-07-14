@@ -41,16 +41,9 @@
         </nav>
     </header>
     <div class="container-fluid m-1">
+        @include('message')
         <hr>
-        <div class="container d-flex justify-content-center text-center">
-            <div class="w-25">
-                @if (session()->has('message'))
-                    <div class="alert alert-success">
-                        {{ session()->get('message') }}
-                    </div>
-                @endif
-            </div>
-        </div>
+
 
         <div class="table-responsive pt-3">
 
@@ -78,6 +71,7 @@
                                 <th>State</th>
                                 <th>Country</th>
                                 <th>Nationality</th>
+                                <th>Enrollmnets</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -94,6 +88,10 @@
                                     <td>{{ $student->state }}</td>
                                     <td>{{ $student->country }}</td>
                                     <td>{{ $student->nationality }}</td>
+                                    <td><a href="/enrollment/{{ $student->id }}">
+                                            View
+                                        </a>
+                                    </td>
                                     <td>
                                         <a href="/student/edit/{{ $student->id }}" class="edit"><i
                                                 class="las la-edit la-2x"></i></a>
