@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChartController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,3 +43,5 @@ Route::get('course/edit/{id}', [CourseController::class, 'edit'])->middleware('a
 Route::resource('course', CourseController::class)->middleware('auth');
 
 Route::resource('enrollment', EnrollmentController::class)->middleware('auth');
+
+Route::resource('chart', ChartController::class)->middleware('auth');

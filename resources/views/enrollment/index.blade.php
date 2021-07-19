@@ -32,6 +32,9 @@
                             <a class="nav-link active" aria-current="page" href="/enrollment">Enrollment</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="/chart">Charts</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/logout"><span
                                     class="text-danger">Logout</span></a>
                         </li>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Course;
+
 use Illuminate\Http\Request;
 use App\Models\Student;
 
@@ -16,7 +16,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-   
+    
         $students = Student::all();
         return view('student.index', compact('students'));
     }
@@ -102,7 +102,11 @@ class StudentController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
-            'department' => $request->department
+            'department' => $request->department,
+            'address' => $request->address,
+            'country' => $request->country,
+            'nationality' => $request->nationality,
+            'state' => $request->state
         ]);
 
         return redirect('student')->with('message', 'Student updated!');
