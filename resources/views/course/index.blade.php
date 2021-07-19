@@ -31,7 +31,7 @@
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/enrollment">Enrollment</a>
                         </li>
-                         <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link " aria-current="page" href="/chart">Charts</a>
                         </li>
                         <li class="nav-item">
@@ -69,6 +69,7 @@
                                 <th>Name</th>
                                 <th>Credit</th>
                                 <th>Department</th>
+                                <th>Chart</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -81,6 +82,7 @@
                                     <td>{{ $course->name }}</td>
                                     <td>{{ $course->credit }}</td>
                                     <td>{{ $course->department }}</td>
+                                    <td><a href="chart/{{ $course->id }}">View</a></td>
                                     <td>
                                         <a href="course/edit/{{ $course->id }}" class="d-inline  m-0 p-0"><i
                                                 class="las la-edit la-2x"></i></a>

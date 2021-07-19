@@ -23,7 +23,7 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="#">Student</a>
+                            <a class="nav-link" aria-current="page" href="/student">Student</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" aria-current="page" href="/course">Course</a>
@@ -46,8 +46,11 @@
 
     <main>
 
-        <div class="container">
-            <canvas id="myChart" width="400" height="400"></canvas>
+        <div class="containter d-flex justify-content-center">
+            <div class="w-50 h-50">
+                <h4 class="text-center">{{ $course->name }}</h4>
+                <canvas id="myChart" width="200" height="200"></canvas>
+            </div>
         </div>
     </main>
 
@@ -55,29 +58,35 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
     <script>
+        let data = {!! $course !!};
+        const labels = []
+        const chartData = []
+        const backgroundColors = []
+
+        const generateColor = () => {
+            let r = Math.floor(Math.random() * 255);
+            let g = Math.floor(Math.random() * 255);
+            let b = Math.floor(Math.random() * 255);
+            return (`rgb(${r}, ${g}, ${b})`)
+        }
+        for (const [key, value] of Object.entries(data.count_by_country)) {
+            labels.push(key);
+            chartData.push(value)
+        }
+        for (let i = 0; i < labels.length; i++) {
+            backgroundColors.push(generateColor())
+        }
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+                labels: labels,
                 datasets: [{
-                    label: '# of Votes',
-                    data: [12, 19, 3, 5, 2, 3],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
+                    label: 'Course by country',
+                    data: chartData,
+                    backgroundColor: backgroundColors,
                     borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
+                        'rgba(255, 99, 132, .2)',
                     ],
                     borderWidth: 1
                 }]
