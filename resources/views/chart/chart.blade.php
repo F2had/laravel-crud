@@ -59,6 +59,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
     <script>
         let data = {!! $course !!};
+        console.log(data.type);
         const labels = []
         const chartData = []
         const backgroundColors = []
@@ -69,7 +70,7 @@
             let b = Math.floor(Math.random() * 255);
             return (`rgb(${r}, ${g}, ${b})`)
         }
-        for (const [key, value] of Object.entries(data.count_by_country)) {
+        for (const [key, value] of Object.entries(data.count_by)) {
             labels.push(key);
             chartData.push(value)
         }
@@ -82,7 +83,7 @@
             data: {
                 labels: labels,
                 datasets: [{
-                    label: 'Course by country',
+                    label: `Course by ${data.type}`,
                     data: chartData,
                     backgroundColor: backgroundColors,
                     borderColor: [

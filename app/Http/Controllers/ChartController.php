@@ -15,26 +15,19 @@ class ChartController extends Controller
     public function index()
     {
 
-        // $courses = Course::whereHas('students')->get();
-        // $courses->map(function ($course) {
-        //     //Count each student country for a subject
-        //     $course->count_by_country = $course->students->groupBy('country')->map->count();
-        //     // //Count State
-        //     // $course->count_by_state = $course->students->groupBy('state')->map->count();
-        //     // //Count Department
-        //     // $course->count_by_department = $course->students->groupBy('department')->map->count();
-        //     return $course;
-        // });
+        $courses = Course::all();
 
-        // return view('charts', compact('courses'));
+        return view('chart.index', compact('courses'));
     }
 
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        $type = $request->query('type');
         $course = Course::find($id);
-        $course->count_by_country = $course->students->groupBy('country')->map->count();
+        $course->count_by = $course->students->groupBy($type)->map->count();
+        $course->type = $type;
         // ddd($course);
-        return view('charts', compact('course'));
+        return view('chart.chart', compact('course'));
     }
 }

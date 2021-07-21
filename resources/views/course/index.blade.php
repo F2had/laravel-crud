@@ -10,39 +10,11 @@
         href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 </head>
 
+
 <body>
+    @include('header')
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/student">Student</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/course">Course</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/enrollment">Enrollment</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link " aria-current="page" href="/chart">Charts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/logout"><span
-                                    class="text-danger">Logout</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
     <div class="container-fluid m-1">
 
         @include('message')
@@ -69,7 +41,6 @@
                                 <th>Name</th>
                                 <th>Credit</th>
                                 <th>Department</th>
-                                <th>Chart</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -82,7 +53,6 @@
                                     <td>{{ $course->name }}</td>
                                     <td>{{ $course->credit }}</td>
                                     <td>{{ $course->department }}</td>
-                                    <td><a href="chart/{{ $course->id }}">View</a></td>
                                     <td>
                                         <a href="course/edit/{{ $course->id }}" class="d-inline  m-0 p-0"><i
                                                 class="las la-edit la-2x"></i></a>
