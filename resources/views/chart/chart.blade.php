@@ -12,42 +12,11 @@
 
 <body>
 
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <div class="container-fluid">
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/student">Student</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/course">Course</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/enrollment">Enrollment</a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link " aria-current="page" href="/chart">Charts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" aria-current="page" href="/logout"><span
-                                    class="text-danger">Logout</span></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-
+    @include('header')
     <main>
 
         <div class="containter d-flex justify-content-center">
-            <div class="w-50 h-50">
+            <div class="w-25 h-25">
                 <h4 class="text-center">{{ $course->name }}</h4>
                 <canvas id="myChart" width="200" height="200"></canvas>
             </div>
