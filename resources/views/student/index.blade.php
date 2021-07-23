@@ -109,8 +109,8 @@
     <script>
         $(document).ready(function() {
             $('#studentTable').DataTable({
-                "bPaginate": false,
-                "bLengthChange": false,
+                "bPaginate": true,
+                "bLengthChange": true,
                 "bFilter": true,
                 "bInfo": false,
                 "bAutoWidth": false
