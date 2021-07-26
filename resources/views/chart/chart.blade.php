@@ -16,9 +16,9 @@
     <main>
 
         <div class="containter d-flex justify-content-center">
-            <div class="w-25 h-25">
+            <div class="w-25 h-50">
                 <h4 class="text-center">{{ $course->name }}</h4>
-                <canvas id="myChart" width="200" height="200"></canvas>
+                <canvas id="myChart" width="400" height="400"></canvas>
             </div>
         </div>
     </main>
@@ -28,7 +28,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
     <script>
         let data = {!! $course !!};
-        console.log(data.type);
+
         const labels = []
         const chartData = []
         const backgroundColors = []
@@ -46,7 +46,8 @@
         for (let i = 0; i < labels.length; i++) {
             backgroundColors.push(generateColor())
         }
-        var ctx = document.getElementById('myChart').getContext('2d');
+        var canvas = document.getElementById('myChart');
+        var ctx = canvas.getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
@@ -66,9 +67,18 @@
                     y: {
                         beginAtZero: true
                     }
+                },
+                onClick: (e) => {
+                    console.log(e)
                 }
             }
         });
+
+        // canvas.onclick = function(e) {
+        //     var activePoints = myChart.getElementsAtEvent(e);
+        //     console.log(activePoints)
+        //     // => activePoints is an array of points on the canvas that are at the same position as the click event.
+        // };
     </script>
 </body>
 

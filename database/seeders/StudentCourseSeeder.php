@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Student;
+use App\Models\Course;
 use App\Models\StudentCourse;
 use Illuminate\Database\Seeder;
 use PhpParser\Node\Stmt\TryCatch;
@@ -16,14 +18,30 @@ class StudentCourseSeeder extends Seeder
     public function run()
     {
 
-        StudentCourse::factory()
-            ->count(10000)
-            ->create();
+        ini_set('memory_limit', '2048M');
         // try {
-
-        // } catch (\Throwable $th) {
-        //     //throw $th;
-        //     print_r($th);
+        //     StudentCourse::factory()
+        //         ->times(10000)
+        //         ->create();
+        // } catch (\Throwable $e) {
+        //     // throw $e;
+        //     report($e);
         // }
+
+        for ($i = 0; $i < 30000; $i++) {
+            try {
+                sleep(1);
+                $random = rand(1, Student::count());
+                // $random =  Student::all()->random()->id;
+               
+                print_r($i ." " .$random ."\n");
+                StudentCourse::create([
+                    'student_id' => $random,
+                    'course_id' => Course::all()->random()->id
+                ]);
+            } catch (\Throwable $e) {
+                report($e);
+            }
+        }
     }
 }

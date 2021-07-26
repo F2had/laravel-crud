@@ -17,7 +17,7 @@ class EnrollmentController extends Controller
     public function index()
     {
 
-        $courses = Course::withCount('students')->get();
+        $courses = Course::orderBy('name')->get();
 
         return view('enrollment.index', compact('courses'));
     }
@@ -29,8 +29,8 @@ class EnrollmentController extends Controller
      */
     public function create()
     {
-        $courses = Course::all();
-        $students = Student::all();
+        $courses = Course::paginate(50);
+        $students = Student::paginate(50);
         return view('enrollment.create', compact('students', 'courses'));
     }
 
@@ -71,6 +71,14 @@ class EnrollmentController extends Controller
     {
         $student = Student::find($id);
         return view('enrollment.view', compact('student'));
+    }
+
+    public function showEnrollment($id)
+    {
+        $course = Course::find($id);
+        $count = $course->students->count();
+        $students = $course->students()->orderBy('name')->paginate(25);
+        return view('enrollment.courseEnrollment', compact('course', 'students', 'count'));
     }
 
     /**

@@ -34,57 +34,52 @@
             <!--  -->
             <div class="row d-flex justify-content-center mt-2">
 
-                @foreach ($courses as $course)
 
-                    <div class="col-6">
-
-                        <div class="card shadow mb-4">
-
-                            <div class="card-header py-2 d-flex justfiy-content-center ">
-
-                                <button class="btn btn-link text-center" data-toggle="collapse"
-                                    data-target="#{{ str_replace(' ', '', $course->name) }}">
-                                    <h6 class="m-0 font-weight-bold text-primary ">{{ $course->name }}</h6>
-                                </button>
-
-                            </div>
+                <div class="col-6">
 
 
-                            <div id="{{ str_replace(' ', '', $course->name) }}" class="collapse">
 
-                                <div class="card-body">
 
-                                    <div class="table-responsive" id="">
 
-                                        <table class="table table-bordered" id="" width="100%" cellspacing="0">
 
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">Name</th>
-                                                </tr>
-                                            </thead>
+                    <div class="card-body">
 
-                                            <tbody>
-                                                @foreach ($course->students as $student)
-                                                    <tr>
-                                                        <td>{{ $student->name }}</td>
-                                                    </tr>
-                                                @endforeach
-                                            </tbody>
+                        <div class="table-responsive" id="">
 
-                                        </table>
-                                    </div>
+                            <table class="table table-bordered" id="" width="100%" cellspacing="0">
 
-                                </div>
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Course name</th>
+                                        <th scope="col">Enrolled students</th>
+                                    </tr>
+                                </thead>
+                                @foreach ($courses as $course)
 
-                            </div>
+                                    <tbody>
 
+                                        <tr>
+                                            <td>{{ $course->name }} </td>
+                                            <td><a href="/enrollment/showEnrollment/{{ $course->id }}" target="_blank"
+                                                    rel="noopener noreferrer">View</a></td>
+                                        </tr>
+
+                                    </tbody>
+                                @endforeach
+
+                            </table>
                         </div>
 
-                    </div>
-                    <div class="w-100"></div>
 
-                @endforeach
+                    </div>
+
+
+
+
+
+                </div>
+                <div class="w-100"></div>
+
 
 
             </div>

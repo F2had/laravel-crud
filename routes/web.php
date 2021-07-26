@@ -43,5 +43,7 @@ Route::get('course/edit/{id}', [CourseController::class, 'edit'])->middleware('a
 Route::resource('course', CourseController::class)->middleware('auth');
 
 Route::resource('enrollment', EnrollmentController::class)->middleware('auth');
+Route::get('enrollment/showEnrollment/{id}', [EnrollmentController::class, 'showEnrollment'])->middleware('auth');
+
 
 Route::resource('chart', ChartController::class)->middleware('auth');

@@ -25,6 +25,7 @@ class StudentCourseFactory extends Factory
     {
 
         return [
+            // 'student_id' => rand(1, Student::count()),
             'student_id' => Student::all()->random()->id,
             'course_id' => Course::all()->random()->id,
         ];
