@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Course;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,21 @@ class StudentController extends Controller
     return response()->json(['students' => $students]);
   }
 
-
+  public function filter(Request $request)
+  {
+    $filterBy = $request->query('filterby');
+    $filterWord = $request->query('filterword');
+    $course_id = $request->query('course-id');
+    if ($filterBy && $filterWord && $course_id) {
+      $course = Course::whereHas('students', function ($query) use ($filterBy, $filterWord) {
+        return $query->where($filterBy, '=', $filterWord);
+      })->first();
+      $students = $course->students()->paginate(3);
+      return response()->json(['students' => $students]);
+    } else {
+      return response()->json(['error' => 'Invalid query']);
+    }
+  }
 
 
   public function store(Request $request)

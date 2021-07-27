@@ -15,11 +15,19 @@
     @include('header')
     <main>
 
-        <div class="containter d-flex justify-content-center">
-            <div class="w-25 h-50">
-                <h4 class="text-center">{{ $course->name }}</h4>
-                <canvas id="myChart" width="400" height="400"></canvas>
+        <div class="containter ">
+            <div class="d-flex justify-content-center h-100">
+                <div class="w-25 h-50">
+                    <h4 class="text-center">{{ $course->name }}</h4>
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
             </div>
+            <div class="row d-flex justify-content-center mt-5" id="grid">
+                <div class="col-6 text-center">
+                   Hello
+                </div>
+            </div>
+
         </div>
     </main>
 
@@ -27,59 +35,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
     <script>
-        let data = {!! $course !!};
-
-        const labels = []
-        const chartData = []
-        const backgroundColors = []
-
-        const generateColor = () => {
-            let r = Math.floor(Math.random() * 255);
-            let g = Math.floor(Math.random() * 255);
-            let b = Math.floor(Math.random() * 255);
-            return (`rgb(${r}, ${g}, ${b})`)
-        }
-        for (const [key, value] of Object.entries(data.count_by)) {
-            labels.push(key);
-            chartData.push(value)
-        }
-        for (let i = 0; i < labels.length; i++) {
-            backgroundColors.push(generateColor())
-        }
-        var canvas = document.getElementById('myChart');
-        var ctx = canvas.getContext('2d');
-        var myChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{
-                    label: `Course by ${data.type}`,
-                    data: chartData,
-                    backgroundColor: backgroundColors,
-                    borderColor: [
-                        'rgba(255, 99, 132, .2)',
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                onClick: (e) => {
-                    console.log(e)
-                }
-            }
-        });
-
-        // canvas.onclick = function(e) {
-        //     var activePoints = myChart.getElementsAtEvent(e);
-        //     console.log(activePoints)
-        //     // => activePoints is an array of points on the canvas that are at the same position as the click event.
-        // };
+        let controllerData = {!! $course !!};
     </script>
+    <script src="{{ asset('js/script.js') }}"></script>
 </body>
 
 </html>

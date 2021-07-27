@@ -31,11 +31,11 @@
 
                         <tr>
                             <td style="text-align:center">
-                                <a href="/chart/{{ $course->id }}/?type=country" rel="noopener noreferrer">By
+                                <a href="/chart/{{ $course->id }}/?by=country" rel="noopener noreferrer">By
                                     Country</a>
-                                | <a href="/chart/{{ $course->id }}/?type=state" rel="noopener noreferrer">By
+                                | <a href="/chart/{{ $course->id }}/?by=state" rel="noopener noreferrer">By
                                     State</a>
-                                | <a href="/chart/{{ $course->id }}/?type=department" rel="noopener noreferrer">By
+                                | <a href="/chart/{{ $course->id }}/?by=department" rel="noopener noreferrer">By
                                     Department</a>
                             </td>
                         </tr>

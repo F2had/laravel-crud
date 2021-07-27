@@ -23,11 +23,10 @@ class ChartController extends Controller
 
     public function show(Request $request, $id)
     {
-        $type = $request->query('type');
+        $by = $request->query('by');
         $course = Course::find($id);
-        $course->count_by = $course->students->groupBy($type)->map->count();
-        $course->type = $type;
-        // ddd($course);
+        $course->count_by = $course->students->groupBy($by)->map->count();
+        $course->by = $by;
         return view('chart.chart', compact('course'));
     }
 }
