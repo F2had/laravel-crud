@@ -12,43 +12,73 @@
 
 <body>
 
-   @include('header')
+    @include('header')
 
     <main>
 
         <div class="contianter p-3">
-            <h3>Charts</h3>
-            <table class="table table-striped table-hover">
-                @foreach ($courses as $course)
-                    <thead>
-                        <tr>
-                            <th style="text-align:center; background-color: rgb(155, 165, 163)">
-                                {{ $course->name }}
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                        <tr>
-                            <td style="text-align:center">
-                                <a href="/chart/{{ $course->id }}/?by=country" rel="noopener noreferrer">By
-                                    Country</a>
-                                | <a href="/chart/{{ $course->id }}/?by=state" rel="noopener noreferrer">By
-                                    State</a>
-                                | <a href="/chart/{{ $course->id }}/?by=department" rel="noopener noreferrer">By
-                                    Department</a>
-                            </td>
-                        </tr>
+            <div class="d-flex justify-content-center">
+                <h3 class="text-cetner">Charts</h3>
+            </div>
 
+            <div class="row d-flex justify-content-center">
+                <form action="" id="chartForm" method="post">
+                    @csrf
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <select name="course" class="form-select" id="inputGroupSelect01">
+                                <option disabled selected>Choose Course</option>
+                                @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}">{{ $course->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
 
-                    </tbody>
-                @endforeach
-            </table>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <select name="by" class="form-select" id="inputGroupSelect02">
+                                <option disabled selected>Course by</option>
+                                <option value="country">Country</option>
+                                <option value="state">State</option>
+                                <option value="department">Department</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button id="submitFormID" type="submit" class="btn btn-primary">Get Chart</button>
+                </form>
+            </div>
+
+            <div class="row mt-5" id="chartRow">
+                <div class="col d-flex justify-content-center">
+                    <div id="canvasWrapper" class="w-25 h-50">
+                        <canvas id="myChart" width="400" height="400"></canvas>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row d-flex justify-content-center" id="details">
+            
+
+            </div>
+
         </div>
 
     </main>
 
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+        integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
+
+    <script src="{{ asset('js/script.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </body>
 

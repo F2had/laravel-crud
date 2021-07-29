@@ -36,6 +36,7 @@ Route::get('logout', [SessionController::class, 'logout'])->middleware('auth');
 
 Route::post('login', [SessionController::class, 'login'])->middleware('guest');
 
+Route::get('student/filter', [StudentController::class, 'filter'])->middleware('auth');
 Route::resource('student', StudentController::class)->middleware('auth');
 Route::get('student/edit/{id}', [StudentController::class, 'edit'])->middleware('auth');
 

@@ -34,9 +34,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.4.1/dist/chart.min.js"></script>
-    <script>
-        let controllerData = {!! $course !!};
-    </script>
+
     <script src="{{ asset('js/script.js') }}"></script>
 </body>
 

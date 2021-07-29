@@ -24,6 +24,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('students/filter', [StudentController::class, 'filter'])->middleware('auth:api');
 Route::apiResource('students', StudentController::class)->middleware('auth:api');
 
+
+Route::post('chart', [ChartControllerApi::class, 'getData'])->middleware('auth:api');
+
 Route::post('register', 'App\Http\Controllers\Api\PassportAuthController@register');
 
 Route::post('login', [PassportAuthController::class, 'login'])->name('login');

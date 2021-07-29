@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Student;
-
+use App\Models\Course;
 
 class StudentController extends Controller
 {
@@ -16,7 +16,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-
+        
         $students = Student::paginate(50);
         return view('student.index', compact('students'));
     }
@@ -123,5 +123,19 @@ class StudentController extends Controller
         Student::destroy($id);
 
         return redirect()->back()->with('message', 'Student deleted!');
+    }
+
+    public function filter(Request $request)
+    {
+        $filterBy = $request->query('filterby');
+        $filterWord = $request->query('filterword');
+        $course_id = $request->query('course-id');
+        if ($filterBy && $filterWord && $course_id) {
+            $course = Course::whereHas('students', function ($query) use ($filterBy, $filterWord) {
+                return $query->where($filterBy, '=', $filterWord);
+            })->first();
+            $students = $course->students()->paginate(25)->withQueryString();
+            return response()->json(['students' => $students]);
+        } 
     }
 }

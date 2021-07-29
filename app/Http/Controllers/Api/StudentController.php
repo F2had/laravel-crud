@@ -23,10 +23,8 @@ class StudentController extends Controller
     $filterWord = $request->query('filterword');
     $course_id = $request->query('course-id');
     if ($filterBy && $filterWord && $course_id) {
-      $course = Course::whereHas('students', function ($query) use ($filterBy, $filterWord) {
-        return $query->where($filterBy, '=', $filterWord);
-      })->first();
-      $students = $course->students()->paginate(3);
+      $course = Course::find($course_id);
+      $students = $course->students()->where($filterBy, $filterWord)->paginate(15)->withQueryString();
       return response()->json(['students' => $students]);
     } else {
       return response()->json(['error' => 'Invalid query']);
