@@ -25,7 +25,7 @@
             <div class="row d-flex justify-content-center">
                 <form action="" id="chartForm" method="post">
                     @csrf
-                    <div class="col">
+                    <div class="col-4">
                         <div class="input-group mb-3">
                             <select name="course" class="form-select" id="inputGroupSelect01">
                                 <option disabled selected>Choose Course</option>
@@ -36,13 +36,41 @@
                         </div>
                     </div>
 
-                    <div class="col">
+                    <div class="col-4">
                         <div class="input-group mb-3">
                             <select name="by" class="form-select" id="inputGroupSelect02">
                                 <option disabled selected>Course by</option>
                                 <option value="country">Country</option>
                                 <option value="state">State</option>
                                 <option value="department">Department</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-4">
+                        <div class="input-group mb-3">
+                            <select name="year" class="form-select" id="year">
+                                <option disabled selected>Filter Enrollment Year</option>
+                                <option value="2018">2018</option>
+                                <option value="2019">2019</option>
+                                <option value="2020">2020</option>
+                                <option value="2021">2021</option>
+                                <option value="2022">2022</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <select name="age" class="form-select" id="age">
+                                <option disabled selected>Filter Age</option>
+                                <option value="18">18</option>
+                                <option value="19">19</option>
+                                <option value="20">20</option>
+                                <option value="21">21</option>
+                                <option value="22">22</option>
+                                <option value="23">23</option>
+                                <option value="24">24</option>
+                                <option value="25">25</option>
                             </select>
                         </div>
                     </div>
@@ -61,7 +89,7 @@
             </div>
 
             <div class="row d-flex justify-content-center" id="details">
-            
+
 
             </div>
 

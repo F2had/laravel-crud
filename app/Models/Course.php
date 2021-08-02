@@ -15,7 +15,8 @@ class Course extends Model
         'department',
     ];
 
-    public function students(){
-        return $this->belongsToMany(Student::class ,'student_courses');
+    public function students()
+    {
+        return $this->belongsToMany(Student::class, 'student_courses')->withPivot('year');
     }
 }

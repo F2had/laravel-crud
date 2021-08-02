@@ -16,7 +16,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-        
+
+       
         $students = Student::paginate(50);
         return view('student.index', compact('students'));
     }
@@ -136,6 +137,6 @@ class StudentController extends Controller
             })->first();
             $students = $course->students()->paginate(25)->withQueryString();
             return response()->json(['students' => $students]);
-        } 
+        }
     }
 }

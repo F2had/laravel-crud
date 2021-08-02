@@ -22,7 +22,22 @@ class StudentController extends Controller
     $filterBy = $request->query('filterby');
     $filterWord = $request->query('filterword');
     $course_id = $request->query('course-id');
-    if ($filterBy && $filterWord && $course_id) {
+    $year = $request->query('year');
+    $age = $request->query('age');
+
+    if ($filterBy && $filterWord && $course_id && $year && $age) {
+      $course = Course::find($course_id);
+      $students = $course->students()->wherePivot('year', $year)->where($filterBy, $filterWord)->where('age', $age)->paginate(15)->withQueryString();
+      return response()->json(['students' => $students]);
+    } else if ($filterBy && $filterWord && $course_id && $year) {
+      $course = Course::find($course_id);
+      $students = $course->students()->wherePivot('year', $year)->where($filterBy, $filterWord)->paginate(15)->withQueryString();
+      return response()->json(['students' => $students]);
+    } else if ($filterBy && $filterWord && $course_id && $age) {
+      $course = Course::find($course_id);
+      $students = $course->students()->where($filterBy, $filterWord)->where('age', $age)->paginate(15)->withQueryString();
+      return response()->json(['students' => $students]);
+    } else if ($filterBy && $filterWord && $course_id) {
       $course = Course::find($course_id);
       $students = $course->students()->where($filterBy, $filterWord)->paginate(15)->withQueryString();
       return response()->json(['students' => $students]);

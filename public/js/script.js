@@ -12,14 +12,20 @@ $(document).ready(function () {
     let form = $("#chartForm").on("submit", async (e) => {
         e.preventDefault();
         $("#myChart").hide();
-
+        $("#details").empty();
         $("#canvasWrapper").append(spinner);
         let formData = form.serialize();
-        const data = await axios({
-            method: "POST",
-            url: "/api/chart",
-            data: formData,
-        });
+        var data;
+        try {
+             data = await axios({
+                method: "POST",
+                url: "/api/chart",
+                data: formData,
+            });
+        } catch (error) {
+            console.log(error);
+        }
+
         $("#canvasWrapper #spinner").remove();
         if (data.data) {
             makeChart(data.data);
@@ -90,6 +96,7 @@ $(document).ready(function () {
 
                  <td>${student.name}</td>
                  <td>${student.email}</td>
+                  <td>${student.age}</td>
                  <td>${student.phone}</td>
                  <td>${student.department}</td>
                  <td>${student.address}</td>
@@ -122,6 +129,7 @@ $(document).ready(function () {
                                     <tr>
                                         <th>Name</th>
                                         <th>Email</th>
+                                        <th>Age</th>
                                         <th>Phone</th>
                                         <th>Department</th>
                                         <th>Address</th>
@@ -185,8 +193,22 @@ $(document).ready(function () {
 
         if (value && label) {
             let host = window.location.host;
-            let url = `http://${host}/api/students/filter?filterby=${by}&filterword=${label}&course-id=${id}`;
+            let protocol = window.location.protocol;
+            let year = $("#year").val();
+            let age = $("#age").val();
+            let url;
+
+            if (age && year) {
+                url = `${protocol}//${host}/api/students/filter?filterby=${by}&filterword=${label}&course-id=${id}&year=${year}&age=${age}`;
+            } else if (age) {
+                url = `${protocol}//${host}/api/students/filter?filterby=${by}&filterword=${label}&course-id=${id}&age=${age}`;
+            } else if (year) {
+                url = `${protocol}//${host}/api/students/filter?filterby=${by}&filterword=${label}&course-id=${id}&year=${year}`;
+            } else {
+                url = `${protocol}//${host}/api/students/filter?filterby=${by}&filterword=${label}&course-id=${id}`;
+            }
             details.append(spinner);
+
             try {
                 var response = await axios(url);
             } catch (error) {
