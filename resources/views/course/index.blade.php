@@ -54,8 +54,11 @@
                                     <td>{{ $course->credit }}</td>
                                     <td>{{ $course->department }}</td>
                                     <td>
-                                        <a href="course/edit/{{ $course->id }}" class="d-inline  m-0 p-0"><i
-                                                class="las la-edit la-2x"></i></a>
+                                        <a href="course/edit/{{ $course->id }}" class="d-inline  m-0 p-0">
+                                            <div class="btn btn-primary">
+                                                <i class="las la-edit "></i>
+                                            </div>
+                                        </a>
                                         <form action="/course/{{ $course->id }}" method="post"
                                             class="d-inline m-0 p-0">
                                             @method('delete')

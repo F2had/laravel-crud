@@ -47,4 +47,9 @@ class User extends Authenticatable
     {
         $this->attributes['password'] = bcrypt($password, ['rounds' => 12]);
     }
+
+    public function surveys()
+    {
+        return $this->hasMany(survey_template_hdr::class);
+    }
 }

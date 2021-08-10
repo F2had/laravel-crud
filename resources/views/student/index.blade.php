@@ -68,8 +68,11 @@
                                             </a>
                                         </td>
                                         <td>
-                                            <a href="/student/edit/{{ $student->id }}" class="edit"><i
-                                                    class="las la-edit la-2x"></i></a>
+                                            <a href="/student/edit/{{ $student->id }}" class="edit ">
+                                                <div class="btn btn-primary">
+                                                    <i class="las la-edit "></i>
+                                                </div>
+                                            </a>
                                             <form action="/student/{{ $student->id }}" method="post"
                                                 class="d-inline m-0 p-0">
                                                 @method('delete')
