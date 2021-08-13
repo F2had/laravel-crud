@@ -63,5 +63,7 @@ Route::get('survey/update/question/{id}', [SurveyController::class, 'updateQuest
 Route::put('survey/update/question/{id}', [SurveyController::class, 'updateQuestion'])->middleware('auth');
 Route::post('survey/add/questions', [SurveyController::class, 'addQuestions'])->middleware('auth');
 Route::post('survey/isopen-update/{id}', [SurveyController::class, 'updateIsOpen'])->middleware('auth');
-
+Route::get('survey/response/{url}', [SurveyController::class, 'response']);
+Route::post('survey/response', [SurveyController::class, 'storeResponse']);
+Route::post('survey/new-link', [SurveyController::class, 'generateNewLink']);
 Route::resource('survey', SurveyController::class)->name('get', 'survey')->middleware('auth');

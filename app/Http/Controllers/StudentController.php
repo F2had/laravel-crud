@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Student;
 use App\Models\Course;
-
+use App\Models\survey_template_hdr;
 
 class StudentController extends Controller
 {
@@ -17,7 +17,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-
+        // $survey = survey_template_hdr::find(2);
+        // ddd($survey->responses[0]->responses);
         $students = Student::paginate(50);
         return view('student.index', compact('students'));
     }

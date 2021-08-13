@@ -5,15 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class survey_template_dtl extends Model
+class survey_response_hdr extends Model
 {
     use HasFactory;
 
+    
     protected $fillable = [
-        'hdr_id',
-        'sequence',
-        'question',
-        'answer_type'
+        'start_date',
+        'end_date',
+        'name',
+        'email',
+        'survey_hdr_id',
+        'survey_code',
+        'survey_description'
     ];
 
     public function header()
@@ -21,9 +25,9 @@ class survey_template_dtl extends Model
         return $this->belongsTo(survey_template_hdr::class);
     }
 
+
     public function responses()
     {
-        return $this->hasMany(survey_response_dtl::class, 'survey_dtl_id', 'id');
+        return $this->hasMany(survey_response_dtl::class, 'hdr_id', 'id');
     }
-   
 }

@@ -57,7 +57,15 @@
                                         <td>{{ $header->title }}</td>
                                         <td>{{ $header->code }}</td>
                                         <td>{{ $header->description }}</td>
-                                        <td>{{ $header->url }}</td>
+                                        <td>
+                                            <div id="link-{{ $header->id }}">{{ $header->url }}</div>
+
+                                            <form id="{{ $header->id }}" class="generate-link" method="post">
+                                                @csrf
+                                                <button class="btn btn-sm btn-outline-dark ">Generate New
+                                                    link</button>
+                                            </form>
+                                        </td>
                                         <td><a href="/survey/show/{{ $header->id }}"
                                                 rel="noopener noreferrer">View</a></td>
                                         <td>
@@ -130,8 +138,36 @@
                     console.log(res)
                 }).catch(err => {
                     console.log(err.response.data)
-                })
-            })
+                });
+            });
+
+            $('.generate-link').on('submit', (e) => {
+                e.preventDefault();
+
+                let form = e.target;
+                const id = form.id;
+                let link = $(`#link-${id}`);
+
+
+                const response = axios({
+                    method: "POST",
+                    url: `/survey/new-link`,
+                    data: {
+                        id: id,
+                        _token: '{{ csrf_token() }}'
+                    },
+                }).then((res) => {
+                    if (res.data.success) {
+                        link.html(res.data.newLink);
+                    }
+                }).catch(err => {
+                    console.log(err.response.data)
+                });
+            });
+
+
+
+
         });
     </script>
 </body>

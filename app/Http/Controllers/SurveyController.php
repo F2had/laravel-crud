@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\survey_response_hdr;
+use App\Models\survey_response_dtl;
 use App\Models\survey_template_dtl;
 use App\Models\survey_template_hdr;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Hashids\Hashids;
+use DateTime;
 
 class SurveyController extends Controller
 {
@@ -222,5 +225,88 @@ class SurveyController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function response($url)
+    {
+        $survey = survey_template_hdr::where('url', $url)->first();
+        if (!$survey) return redirect('student');
+        $survey->details->sortBy('sequence');
+
+        return view('survey.response', compact('survey'));
+    }
+
+    public function storeResponse(Request $request)
+    {
+        $rules = [
+            'name' => ['required'],
+            'email' => ['required', 'email'],
+        ];
+
+
+
+        //Create validation rule for each question
+        $questionsNo = $request->numberOfQuestions;
+        for ($i = 0; $i < $questionsNo; $i++) {
+            $question = (string) 'question' . ($i + 1);
+            $rules[$question] = ['required'];
+        }
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) return $validator->errors();
+
+        $survey = survey_template_hdr::find($request->surveyID);
+
+        $response_hdr = survey_response_hdr::create([
+            'start_date' => date("Y-m-d H:i:s", strtotime($request->start_date)),
+            'end_date' => date("Y-m-d H:i:s", strtotime($request->end_date)),
+            'name' =>  $request->name,
+            'email' =>  $request->email,
+            'survey_hdr_id' => $survey->id,
+            'survey_code' => $survey->code,
+            'survey_description' => $survey->description,
+        ]);
+
+
+        foreach ($survey->details->sortBy('sequence') as $key => $value) {
+            $question = 'question' . ($key + 1);
+       
+            if ($value->answer_type === 1) {
+                survey_response_dtl::create([
+                    'hdr_id' => $response_hdr->id,
+                    'survey_dtl_id' => $value->id,
+                    'question' => $value->question,
+                    'answer_type' => $value->answer_type,
+                    'response' => $request->$question,
+                ]);
+            } else {
+                survey_response_dtl::create([
+                    'hdr_id' => $response_hdr->id,
+                    'survey_dtl_id' => $value->id,
+                    'question' => $value->question,
+                    'answer_type' => $value->answer_type,
+                    'response_detail' => $request->$question,
+                ]);
+            }
+        }
+
+        return response()->json(['success' => true]);
+    }
+
+    public function generateNewLink(Request $request)
+    {
+
+
+        $survey  = survey_template_hdr::find($request->id);
+
+        if (!$survey) return response()->json(['error' => 'survey not found']);
+
+        $hashids = new Hashids(bin2hex(random_bytes(12)),  12);
+        $survey->update([
+            'url' => $hashids->encode(1)
+        ]);
+
+        return response()->json(['success' => true, 'newLink' => $hashids->encode(1)]);
     }
 }

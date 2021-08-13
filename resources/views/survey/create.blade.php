@@ -14,8 +14,8 @@
 
     @include('header')
     <div class="container-fluid m-1">
-        @include('message')
-        <hr>
+      
+     
 
         <div class="container-fluid p-2">
             <form action="" method="post">
@@ -208,6 +208,9 @@
                             }
                         }
 
+                    }, 
+                    error: function(error){
+                        console.log(error);
                     }
                 });
 
