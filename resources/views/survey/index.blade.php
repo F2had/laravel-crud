@@ -58,8 +58,10 @@
                                         <td>{{ $header->code }}</td>
                                         <td>{{ $header->description }}</td>
                                         <td>
+                                            //TODO: update href when generating a new link
+                                             <a href="/survey/response/{{ $header->url }}">
                                             <div id="link-{{ $header->id }}">{{ $header->url }}</div>
-
+                                            </a>
                                             <form id="{{ $header->id }}" class="generate-link" method="post">
                                                 @csrf
                                                 <button class="btn btn-sm btn-outline-dark ">Generate New
