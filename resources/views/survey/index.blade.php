@@ -46,6 +46,7 @@
                                     <th>URL</th>
                                     <th>Questions</th>
                                     <th>Action</th>
+                                    <th>Responses</th>
                                     <th>Accept responses</th>
                                 </tr>
                             </thead>
@@ -58,9 +59,10 @@
                                         <td>{{ $header->code }}</td>
                                         <td>{{ $header->description }}</td>
                                         <td>
-                                            //TODO: update href when generating a new link
-                                             <a href="/survey/response/{{ $header->url }}">
-                                            <div id="link-{{ $header->id }}">{{ $header->url }}</div>
+
+                                            <a id="href-{{ $header->id }}"
+                                                href="/survey/response/{{ $header->url }}">
+                                                <div id="link-{{ $header->id }}">{{ $header->url }}</div>
                                             </a>
                                             <form id="{{ $header->id }}" class="generate-link" method="post">
                                                 @csrf
@@ -86,13 +88,18 @@
 
                                         </td>
                                         <td>
+                                            <a href="/survey/responses-summary/{{ $header->url }}">Summary</a>
+                                            <br>
+                                            <a href="/survey/responses/{{ $header->url }}">Individual</a>
+                                        </td>
+                                        <td>
                                             <form action="" method="post">
-                                                @csrf
                                                 <div class="custom-control custom-switch">
+                                                    @csrf
                                                     <input type="checkbox" {{ $header->isOpen ? 'checked' : '' }}
-                                                        class="custom-control-input" id="{{ $header->id }}">
+                                                        class="custom-control-input" data-id="{{ $header->id }}" id="{{ $header->url }}">
                                                     <label class="custom-control-label"
-                                                        for="{{ $header->id }}"></label>
+                                                        for="{{ $header->url }}"></label>
                                                 </div>
                                             </form>
                                         </td>
@@ -127,7 +134,8 @@
                 e.preventDefault();
 
                 let value = e.target.checked;
-                let id = e.target.id
+                let id = $(e.target).data('id');
+              
 
                 const response = axios({
                     method: "POST",
@@ -137,7 +145,7 @@
                         _token: '{{ csrf_token() }}'
                     },
                 }).then((res) => {
-                    console.log(res)
+
                 }).catch(err => {
                     console.log(err.response.data)
                 });
@@ -149,6 +157,7 @@
                 let form = e.target;
                 const id = form.id;
                 let link = $(`#link-${id}`);
+                let href = $(`#href-${id}`);
 
 
                 const response = axios({
@@ -160,6 +169,7 @@
                     },
                 }).then((res) => {
                     if (res.data.success) {
+                        href.attr('href', `/survey/response/${res.data.newLink}`)
                         link.html(res.data.newLink);
                     }
                 }).catch(err => {

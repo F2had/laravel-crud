@@ -308,7 +308,15 @@
             });
 
             const successMessage = () => {
-                $('body').html('your response has been recorded');
+                $('body .container-fluid').html(`<div class="container-flud" >
+                            <div class="d-flex justify-content-center m-4" >
+                            <p class="d-flex justify-content-center m-4">Your response has been recorded successfully. 
+                            <br>
+                            &#10;
+                            
+                            <a href="javascript:window.location.href=window.location.href">Submit another response.</a>  </p> 
+                          </div>
+                            </div>`);
             }
         });
     </script>

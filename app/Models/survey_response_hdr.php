@@ -26,7 +26,7 @@ class survey_response_hdr extends Model
     }
 
 
-    public function responses()
+    public function answers()
     {
         return $this->hasMany(survey_response_dtl::class, 'hdr_id', 'id');
     }

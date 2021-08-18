@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Validator;
 use Hashids\Hashids;
 use DateTime;
 
+
 class SurveyController extends Controller
 {
     /**
@@ -271,7 +272,7 @@ class SurveyController extends Controller
 
         foreach ($survey->details->sortBy('sequence') as $key => $value) {
             $question = 'question' . ($key + 1);
-       
+
             if ($value->answer_type === 1) {
                 survey_response_dtl::create([
                     'hdr_id' => $response_hdr->id,
@@ -308,5 +309,32 @@ class SurveyController extends Controller
         ]);
 
         return response()->json(['success' => true, 'newLink' => $hashids->encode(1)]);
+    }
+
+    public function responses($url)
+    {
+        $survey = survey_template_hdr::where('url', $url)->first();
+
+        $responses = survey_response_hdr::with('answers')->where('survey_hdr_id', '=', $survey->id)->paginate(1);
+
+        if (!$responses->hasPages()) return redirect()->back()->with('error', 'No responses yet.');
+        $item  = $responses->items();
+        $answer = $item[0];
+        $diff = abs(strtotime($answer->end_date) - strtotime($answer->start_date));
+        $answer->time_taken = round($diff / 60);
+
+        return view('survey.responses', compact('survey', 'answer', 'responses'));
+    }
+
+    public function responsesSummary($url)
+    {
+        $survey = survey_template_hdr::where('url', $url)->first();
+
+        foreach ($survey->responses as $key => $value) {
+            $diff = abs(strtotime($value->end_date) - strtotime($value->start_date));
+            $value->time_taken = round($diff / 60);
+        }
+
+        return view('survey.responses-summary', compact('survey'));
     }
 }
