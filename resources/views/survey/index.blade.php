@@ -72,12 +72,18 @@
                                         </td>
                                         <td><a href="/survey/show/{{ $header->id }}"
                                                 rel="noopener noreferrer">View</a></td>
-                                        <td>
+                                        <td class="text-nowrap">
+                                            <a href="/survey/share/{{ $header->id }}">
+                                                <div class="btn  btn-success">
+                                                    <i class="las la-share"></i>
+                                                </div>
+                                            </a>
                                             <a href="/survey/edit/{{ $header->id }}" class="edit">
                                                 <div class="btn btn-primary">
                                                     <i class="las la-edit "></i>
                                                 </div>
                                             </a>
+
                                             <form action="/survey/{{ $header->id }}" method="post"
                                                 class="d-inline m-0 p-0">
                                                 @method('delete')
@@ -97,7 +103,8 @@
                                                 <div class="custom-control custom-switch">
                                                     @csrf
                                                     <input type="checkbox" {{ $header->isOpen ? 'checked' : '' }}
-                                                        class="custom-control-input" data-id="{{ $header->id }}" id="{{ $header->url }}">
+                                                        class="custom-control-input" data-id="{{ $header->id }}"
+                                                        id="{{ $header->url }}">
                                                     <label class="custom-control-label"
                                                         for="{{ $header->url }}"></label>
                                                 </div>
@@ -135,7 +142,7 @@
 
                 let value = e.target.checked;
                 let id = $(e.target).data('id');
-              
+
 
                 const response = axios({
                     method: "POST",

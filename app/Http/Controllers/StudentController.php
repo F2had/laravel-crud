@@ -17,7 +17,7 @@ class StudentController extends Controller
      */
     public function index()
     {
-       
+
         $students = Student::paginate(50);
         return view('student.index', compact('students'));
     }
@@ -138,5 +138,26 @@ class StudentController extends Controller
             $students = $course->students()->paginate(25)->withQueryString();
             return response()->json(['students' => $students]);
         }
+    }
+
+    public function search(Request $request)
+    {
+        $response = array();
+
+        if ($request->has('search')) {
+            $search = $request->search;
+            if (empty($search)) {
+                $autocomplete = Student::orderby('name')->select('name', 'email', 'id')->limit(5)->get();
+            } else {
+                $autocomplete = Student::orderby('name')->select('name', 'email', 'id')->where('name', 'like',  $search . '%')->limit(5)->get();
+            }
+
+
+            foreach ($autocomplete as $autocomplete) {
+                $response[] = array('name' => $autocomplete->name, 'email' => $autocomplete->email);
+            }
+        }
+
+        return response()->json($response);
     }
 }

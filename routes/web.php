@@ -40,6 +40,7 @@ Route::post('login', [SessionController::class, 'login'])->middleware('guest');
 Route::get('student/filter', [StudentController::class, 'filter'])->middleware('auth');
 Route::resource('student', StudentController::class)->middleware('auth');
 Route::get('student/edit/{id}', [StudentController::class, 'edit'])->middleware('auth');
+Route::post('student/search', [StudentController::class, 'search'])->middleware('auth');
 
 Route::get('course/edit/{id}', [CourseController::class, 'edit'])->middleware('auth');
 Route::resource('course', CourseController::class)->middleware('auth');
@@ -68,4 +69,6 @@ Route::post('survey/response', [SurveyController::class, 'storeResponse']);
 Route::post('survey/new-link', [SurveyController::class, 'generateNewLink']);
 Route::get('survey/responses-summary/{url}', [SurveyController::class, 'responsesSummary']);
 Route::get('survey/responses/{url}', [SurveyController::class, 'responses']);
+Route::get('/survey/share/{id}', [SurveyController::class, 'share']);
+
 Route::resource('survey', SurveyController::class)->name('get', 'survey')->middleware('auth');

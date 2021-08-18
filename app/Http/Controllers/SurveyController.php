@@ -337,4 +337,13 @@ class SurveyController extends Controller
 
         return view('survey.responses-summary', compact('survey'));
     }
+
+    public function share($id)
+    {
+        $survey = survey_template_hdr::find($id)->select('title')->first();
+      
+        return view('survey.share', compact('survey'));
+    }
+
+
 }
