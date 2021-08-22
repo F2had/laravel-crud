@@ -23,18 +23,46 @@
         <div class="container-fluid p-2">
 
             <div class="row ">
-                <div class="col-md-10 offset-1 text-center">
+                <div class="col-md-10 offset-1 ">
                     <div class="card">
-                        <div class="card-header bg-dark text-white">
+                        <div class="card-header bg-dark text-white text-center">
                             <h3>Share {{ $survey->title }} Survey</h3>
                         </div>
                         <form action="" id="emailForm" method="post">
+                            @csrf
+                            <input type="hidden" name="id" value="{{ $survey->id }}">
+
                             <div class="card-body">
-                                <select name="emails" class="studentSearch w-100"></select>
+                                <div class="row">
+
+                                    <div class="col-10">
+                                        <select name="emails[]" class="studentSearch w-100"></select>
+                                    </div>
+
+                                    <div class="col-2 form-check">
+                                        <input type="checkbox" class="form-check-input" name="customMessage"
+                                            id="customMessage">
+                                        <label class="form-check-label" for="customMessage">Custom
+                                            Message</label>
+                                    </div>
+                                    <div class="w-100"></div>
+                                    <div class="col mt-2">
+                                        <div class="form-group " id="messageDiv" style="display: none">
+                                            <label for="message">Message...</label>
+                                            <textarea name="message" class="form-control" id="message"
+                                                rows="3"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="w-100"></div>
+                                    <div class="col mt-3">
+                                        <button class="btn btn-outline-primary mb-2 ml-2" type="submit">
+                                            Share
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
-                            <button class="btn btn-outline-primary" type="submit">
-                                Submit
-                            </button>
+
                         </form>
                     </div>
                 </div>
@@ -56,7 +84,7 @@
     <script type="text/javascript">
         $(document).ready(() => {
             const _token = $('meta[name="csrf-token"]').attr('content');
-            
+
             $('.studentSearch').select2({
                 placeholder: 'Select Student(s)...',
                 multiple: true,
@@ -66,7 +94,14 @@
                     url: '/student/search',
                     type: 'POST',
                     dataType: 'json',
-                    data: ({ term }) => { return { search: term, _token: _token } },
+                    data: ({
+                        term
+                    }) => {
+                        return {
+                            search: term,
+                            _token: _token
+                        }
+                    },
                     processResults: (data) => {
                         return {
                             results: $.map(data, item => {
@@ -83,6 +118,25 @@
 
             $('#emailForm').on('submit', (e) => {
                 e.preventDefault();
+                const data = $('#emailForm').serialize();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/survey/share',
+                    data: data,
+                    success: (response) => {
+                        console.log(response);
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                });
+
+            });
+
+            $("#customMessage").on('change', (e) => {
+                const messageDiv = $('#messageDiv').toggle()
+                $('#customMessage').is(':checked') ? messageDiv.show() : messageDiv.hide();
             });
         });
     </script>

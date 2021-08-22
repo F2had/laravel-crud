@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SurveyShare;
 use App\Models\survey_response_hdr;
 use App\Models\survey_response_dtl;
 use App\Models\survey_template_dtl;
@@ -10,7 +11,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Hashids\Hashids;
-use DateTime;
+use Mail;
 
 
 class SurveyController extends Controller
@@ -330,20 +331,69 @@ class SurveyController extends Controller
     {
         $survey = survey_template_hdr::where('url', $url)->first();
 
-        foreach ($survey->responses as $key => $value) {
-            $diff = abs(strtotime($value->end_date) - strtotime($value->start_date));
-            $value->time_taken = round($diff / 60);
+
+        foreach ($survey->details as $key => $value) {
+
+            $count = array();
+            foreach ($value->responses as  $value) {
+
+                // $diff = abs(strtotime($value->end_date) - strtotime($value->start_date));
+                // $value->time_taken = round($diff / 60);
+
+                $question = 'question' . ($key + 1);
+                if ($survey->details[$key]->answer_type != 3) {
+
+                    if ($value->response) {
+                        array_key_exists($value->response, $count) ?  $count[$value->response]++ :
+                            $count[$value->response] = 1;
+                    } else {
+                        array_key_exists($value->response_detail, $count) ?  $count[$value->response_detail]++ :
+                            $count[$value->response_detail] = 1;
+                    }
+                }
+            }
+
+            $survey->details[$key]->$question = $count;
         }
 
-        return view('survey.responses-summary', compact('survey'));
+
+        $details = $survey->details;
+        $title = $survey->title;
+        $code = $survey->code;
+        $desc = $survey->description;
+
+        return view('survey.responses-summary', compact('details', 'title', 'code', 'desc'));
     }
 
     public function share($id)
     {
-        $survey = survey_template_hdr::find($id)->select('title')->first();
-      
+        $survey = survey_template_hdr::find($id)->first();
+
         return view('survey.share', compact('survey'));
     }
 
+    public function sendSurvey(Request $request)
+    {
+        
+        if ($request->has('id')) {
+            $survey = survey_template_hdr::find($request->id);
+            $host = $request->getSchemeAndHttpHost();
+            $url = $host . '/survey/response/' . $survey->url;
+            $title = $survey->title;
+            $message = $request->customMessage == 'on' ? $request->message : '';
+            $details = [
+                'title' => $title,
+                'message' => $message,
+                'url' => $url
+            ];
+         
+             Mail::to($request->emails)->send(new SurveyShare($details));
 
+            if (Mail::failures()) {
+                return response()->json(['error'=> 'Error while sending email']);
+            }
+       
+        }
+        return response()->json(['success' => true]);
+    }
 }

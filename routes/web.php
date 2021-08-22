@@ -70,5 +70,6 @@ Route::post('survey/new-link', [SurveyController::class, 'generateNewLink']);
 Route::get('survey/responses-summary/{url}', [SurveyController::class, 'responsesSummary']);
 Route::get('survey/responses/{url}', [SurveyController::class, 'responses']);
 Route::get('/survey/share/{id}', [SurveyController::class, 'share']);
+Route::post('/survey/share', [SurveyController::class, 'sendSurvey']);
 
 Route::resource('survey', SurveyController::class)->name('get', 'survey')->middleware('auth');

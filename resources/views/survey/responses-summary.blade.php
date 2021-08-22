@@ -15,57 +15,53 @@
     @include('header')
     <div class="container-fluid m-1">
 
-        <div class="container-fluid">
+        <div class="row">
 
             <div class="col-12 d-flex justify-content-center">
                 <div class="card" style="width: 50%;">
                     <div class="card-header" style="background-color: #6610f2"></div>
                     <div class="card-body">
-                        <h4 class="card-title">{{ $survey->title }}</h4>
-                        <h6 class="card-subtitle">{{ $survey->title }}</h6>
-                        <p class="card-text">{{ $survey->description }}</p>
+                        <h4 class="card-title">{{ $title }}</h4>
+                        <h6 class="card-subtitle">{{ $code }}</h6>
+                        <p class="card-text">{{ $desc }}</p>
                     </div>
                 </div>
             </div>
 
-            @foreach ($survey->details as $question)
+            @foreach ($details as $key => $response)
 
                 <div class="col-12 d-flex justify-content-center pt-4">
                     <div class="card" style="width: 50%;">
-                        <div class="card-header">{{ $question->question }}</div>
+                        <div class="card-header">{{ $response->question }}</div>
+                        @if ($response->answer_type == 3)
+                            @foreach ($response->responses as $answer)
 
-                        @foreach ($question->responses as $answer)
-                            <ul class="list-group list-group-flush">
-                                @if ($answer->response_detail)
+                                <ul class="list-group list-group-flush">
                                     <li class="list-group-item">{{ $answer->response_detail }}</li>
-                                @else
-                                    <li class="list-group-item">{{ $answer->response }}</li>
-                                @endif
-                            </ul>
+                                </ul>
+
+                            @endforeach
+                        @else
+                            @foreach ($response->responses as $answer)
+                                <div class="card-body w-50">
+                                    <div class="row">
+                                        <div class="col-12 offset-6">
+                                            <canvas id="question{{ $key + 1 }}" width="200" height="200"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            @break
                         @endforeach
+            @endif
 
-                    </div>
-                </div>
-
-            @endforeach
-
-            <div class="col-12 d-flex justify-content-center pt-4">
-                <div class="card" style="width: 50%;">
-                    <div class="card-header">Time Taken in mintues</div>
-
-                    @foreach ($survey->responses as $answer)
-                    
-                        <ul class="list-group list-group-flush">
-                          
-                        <li class="list-group-item">{{ $answer->time_taken }}m</li>
-
-                        </ul>
-                    @endforeach
-
-                </div>
-            </div>
 
         </div>
+    </div>
+    @endforeach
+
+    
+
+    </div>
 
 
 
@@ -74,8 +70,94 @@
 
     <script src="{{ asset('js/app.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.5.1/dist/chart.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(() => {
+            const details = {!! $details !!}
+   
+            const canvasElements = [];
+
+            const getQuestionsData = (obj) => {
+                let tmp = []
+                obj.forEach((element, key) => {
+
+                    let question = 'question' + (key + 1);
+                    tmp.push(element[question])
+
+                    let canvas = document.getElementById(question);
+                    canvas ? canvasElements.push(canvas.getContext('2d')) : '';
+                });
+                let filtered = tmp.filter((e) => {
+                    return e.length != 0
+                });
+
+                return filtered;
+            }
+
+            let data = getQuestionsData(details);
+
+            const createChartInstances = (arr, data) => {
+
+
+                arr.forEach((canv, i) => {
+                    var myChart = new Chart(canv, {
+                        type: 'pie',
+                        data: {
+                            labels: data[i]['labels'],
+                            datasets: [{
+                                label: '# of Votes',
+                                data: data[i]['data'],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.2)',
+                                    'rgba(54, 162, 235, 0.2)',
+                                    'rgba(255, 206, 86, 0.2)',
+                                    'rgba(75, 192, 192, 0.2)',
+                                    'rgba(153, 102, 255, 0.2)',
+                                    'rgba(255, 159, 64, 0.2)'
+                                ],
+                                borderColor: [
+                                    'rgba(255, 99, 132, 1)',
+                                    'rgba(54, 162, 235, 1)',
+                                    'rgba(255, 206, 86, 1)',
+                                    'rgba(75, 192, 192, 1)',
+                                    'rgba(153, 102, 255, 1)',
+                                    'rgba(255, 159, 64, 1)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+
+                        }
+
+                    });
+                });
+            }
+
+            const prepareLabelData = (data) => {
+                const tmp = [];
+
+                data.forEach((element, i) => {
+                    let labels = [];
+                    let dataArr = [];
+                    for (const [key, value] of Object.entries(element)) {
+                        labels.push(key);
+                        dataArr.push(value);
+                    }
+                    tmp.push({
+                        labels: labels,
+                        data: dataArr
+                    });
+                });
+
+                return tmp;
+            }
+
+            data = prepareLabelData(data);
+            createChartInstances(canvasElements, data);
+
+        });
+    </script>
 </body>
 
 </html>
