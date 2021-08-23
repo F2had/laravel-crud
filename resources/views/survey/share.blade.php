@@ -138,7 +138,7 @@
                                 title: 'Success...',
                                 text: 'Email sent successfully!',
                             })
-                            .then(({isConfirmed}) => {isConfirmed  ? window.location.replace('/survey') : '';})
+                            .then(({isConfirmed}) => {isConfirmed  ? null : '';})
                             .catch((err) => {console.log(err);});
                         }
                     },

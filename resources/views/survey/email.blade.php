@@ -284,7 +284,8 @@
                                                     <p
                                                         style="margin: 0; font-size: 30px; line-height: 1.2; text-align: center; word-break: break-word; mso-line-height-alt: 36px; margin-top: 0; margin-bottom: 0;">
                                                         <span style="font-size: 30px; color: #2b303a;"><strong>Survey
-                                                                for {{ $details['title'] }}</strong></span></p>
+                                                                for {{ $details['title'] }}</strong></span>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <!--[if mso]></td></tr></table><![endif]-->
@@ -295,17 +296,8 @@
                                                     style="line-height: 1.5; font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; color: #555555; mso-line-height-alt: 18px;">
                                                     <p
                                                         style="margin: 0; font-size: 15px; line-height: 1.5; text-align: center; word-break: break-word; mso-line-height-alt: 23px; margin-top: 0; margin-bottom: 0;">
-                                                        <span style="color: #808389; font-size: 15px;">
-                                                            @if ($details['message'])
-                                                                {{ $details['message'] }}
-                                                            @else
-                                                                Dear Students,
-                                                                <br>
-                                                                Please Fill the survey by clicking the button below.
-                                                                <br>
-                                                                Thank you.
-                                                            @endif
-                                                        </span></p>
+                                                        {!! html_entity_decode($details['message']) !!}
+                                                    </p>
                                                 </div>
                                             </div>
                                             <!--[if mso]></td></tr></table><![endif]-->
@@ -439,7 +431,8 @@
                                                         style="padding-left:30px;padding-right:30px;font-size:16px;display:inline-block;letter-spacing:undefined;"><span
                                                             style="font-size: 16px; margin: 0; line-height: 2; word-break: break-word; mso-line-height-alt: 32px;"><strong><a
                                                                     href="{{ $details['url'] }}">Fill In
-                                                                    Survey</a></strong></span></span></div>
+                                                                    Survey</a></strong></span></span>
+                                                </div>
                                                 <!--[if mso]></center></v:textbox></v:roundrect></td></tr></table><![endif]-->
                                             </div>
                                             <table border="0" cellpadding="0" cellspacing="0" class="divider"
@@ -606,7 +599,8 @@
                                                     <p
                                                         style="margin: 0; font-size: 12px; line-height: 1.2; word-break: break-word; text-align: left; mso-line-height-alt: 14px; margin-top: 0; margin-bottom: 0;">
                                                         <span style="color: #95979c; font-size: 12px;"> Copyright ©
-                                                            2020</span></p>
+                                                            2020</span>
+                                                    </p>
                                                 </div>
                                             </div>
                                             <!--[if mso]></td></tr></table><![endif]-->

@@ -28,7 +28,7 @@ class SurveyShare extends Mailable
      */
     public function build()
     {
-        return $this->from('Test@example.com', 'Test')
+        return $this->from('Test@example.com', 'Survey')
             ->view('survey.email');
     }
 }

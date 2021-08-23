@@ -7,12 +7,13 @@ use App\Models\survey_response_hdr;
 use App\Models\survey_response_dtl;
 use App\Models\survey_template_dtl;
 use App\Models\survey_template_hdr;
+use App\Models\SurveyShareLog;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Hashids\Hashids;
 use Mail;
-
+use DateTime;
 
 class SurveyController extends Controller
 {
@@ -374,26 +375,37 @@ class SurveyController extends Controller
 
     public function sendSurvey(Request $request)
     {
-        
+        $defaultMessage = ' Dear Students,
+                            <br>
+                            Please Fill the survey by clicking the button below.
+                            <br>
+                            Thank you.';
         if ($request->has('id')) {
             $survey = survey_template_hdr::find($request->id);
             $host = $request->getSchemeAndHttpHost();
             $url = $host . '/survey/response/' . $survey->url;
             $title = $survey->title;
-            $message = $request->customMessage == 'on' ? $request->message : '';
+            $message = $request->customMessage == 'on' ? $request->message : $defaultMessage;
             $details = [
                 'title' => $title,
-                'message' => $message,
+                'message' => htmlentities($message),
                 'url' => $url
             ];
          
              Mail::to($request->emails)->send(new SurveyShare($details));
 
             if (Mail::failures()) {
-                return response()->json(['error'=> 'Error while sending email']);
+                return response()->json(['error' => 'Error while sending email']);
             }
-       
+          
+            foreach ($request->emails as $key => $email) {
+                SurveyShareLog::create([
+                    'sent_at'  => date('Y-m-d H:i:s'),
+                    'sent_to' => $email
+                ]);
+            }
+            return response()->json(['success' => true]);
         }
-        return response()->json(['success' => true]);
+        return response()->json(['error' => 'Survey not found.']);
     }
 }
