@@ -79,6 +79,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     @include('bootstrap')
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <script type="text/javascript">
@@ -119,13 +120,27 @@
             $('#emailForm').on('submit', (e) => {
                 e.preventDefault();
                 const data = $('#emailForm').serialize();
-
+                Swal.fire({
+                    title: 'Sending email...',
+                    didOpen: () => {
+                        Swal.showLoading()
+                    }
+                });
                 $.ajax({
                     type: 'POST',
                     url: '/survey/share',
                     data: data,
+                    async: true,
                     success: (response) => {
-                        console.log(response);
+                        if (response.success) {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success...',
+                                text: 'Email sent successfully!',
+                            })
+                            .then(({isConfirmed}) => {isConfirmed  ? window.location.replace('/survey') : '';})
+                            .catch((err) => {console.log(err);});
+                        }
                     },
                     error: (err) => {
                         console.log(err);

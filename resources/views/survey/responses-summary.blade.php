@@ -82,16 +82,13 @@
                 obj.forEach((element, key) => {
 
                     let question = 'question' + (key + 1);
-                    tmp.push(element[question])
+                    element[question].length != 0 ?  tmp.push(element[question]) : null;
 
                     let canvas = document.getElementById(question);
                     canvas ? canvasElements.push(canvas.getContext('2d')) : '';
                 });
-                let filtered = tmp.filter((e) => {
-                    return e.length != 0
-                });
-
-                return filtered;
+            
+                return tmp;
             }
 
             let data = getQuestionsData(details);
