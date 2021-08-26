@@ -90,6 +90,7 @@ class StudentController extends Controller
             'name' => ['required'],
             'email' => ['required', 'email'],
             'phone' => ['required'],
+            'age' => ['required'],
             'department' => ['required'],
             'address' => ['required'],
             'country' => ['required'],
@@ -99,16 +100,17 @@ class StudentController extends Controller
 
 
 
-        Student::where('id', $request->id)->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'department' => $request->department,
-            'address' => $request->address,
-            'country' => $request->country,
-            'nationality' => $request->nationality,
-            'state' => $request->state
-        ]);
+        $student = Student::find($request->id);
+            $student->name = $request->name;
+            $student->email = $request->email;
+            $student->phone = $request->phone;
+            $student->age = $request->age;
+            $student->department = $request->department;
+            $student->address = $request->address;
+            $student->country = $request->country;
+            $student->nationality = $request->nationality;
+            $student->state = $request->state;
+            $student->save();
 
         return redirect('student')->with('message', 'Student updated!');
     }

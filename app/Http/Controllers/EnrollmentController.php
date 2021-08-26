@@ -50,7 +50,8 @@ class EnrollmentController extends Controller
         try {
             StudentCourse::create([
                 'student_id' => $request->student,
-                'course_id' => $request->course
+                'course_id' => $request->course,
+                'year' => date("Y"),
             ]);
         } catch (\Exception $e) {
 

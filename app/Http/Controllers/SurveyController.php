@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Hashids\Hashids;
 use Mail;
-use DateTime;
+
 
 class SurveyController extends Controller
 {
@@ -137,12 +137,13 @@ class SurveyController extends Controller
 
 
 
-        $survey = survey_template_hdr::where('id', $request->id);
-        $survey->update([
-            'title' => $request->header,
-            'code' => $request->code,
-            'description' => $request->desc
-        ]);
+        $survey = survey_template_hdr::find($request->id);
+
+        $survey->title = $request->header;
+        $survey->code = $request->code;
+        $survey->description = $request->desc;
+        $survey->save();
+
 
         return redirect()->back()->with('message', 'Updated!');
     }
@@ -193,11 +194,10 @@ class SurveyController extends Controller
             'type' => ['required', 'numeric']
         ]);
         $question = survey_template_dtl::find($id);
-        $question->update([
-            'question' => $request->question,
-            'answer_type' => $request->type
-        ]);
 
+        $question->question = $request->question;
+        $question->answer_type = $request->type;
+        $question->save();
         return redirect()->back()->with('message', 'Question updated!');
     }
 
@@ -391,13 +391,13 @@ class SurveyController extends Controller
                 'message' => htmlentities($message),
                 'url' => $url
             ];
-         
-             Mail::to($request->emails)->send(new SurveyShare($details));
+
+            Mail::to($request->emails)->send(new SurveyShare($details));
 
             if (Mail::failures()) {
                 return response()->json(['error' => 'Error while sending email']);
             }
-          
+
             foreach ($request->emails as $key => $email) {
                 SurveyShareLog::create([
                     'sent_at'  => date('Y-m-d H:i:s'),

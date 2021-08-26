@@ -78,11 +78,11 @@ class CourseController extends Controller
         ]);
 
 
-        Course::where('id', $request->id)->update([
-            'name' => $request->name,
-            'credit' => $request->credit,
-            'department' => $request->department
-        ]);
+        $course = Course::find($request->id);
+            $course->name = $request->name;
+            $course->credit = $request->credit;
+            $course->department = $request->department;
+            $course->save();
 
         return redirect('course')->with('message', 'Course updated!');
     }

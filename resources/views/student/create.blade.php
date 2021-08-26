@@ -39,6 +39,15 @@
                     @enderror
                 </div>
 
+                 <div class="mb-3">
+                    <label for="age" class="form-label">Age</label>
+                    <input type="number" value="{{ old('age') }}" name="age" class="form-control"
+                        id="age" aria-describedby="">
+                    @error('age')
+                        <div class="error text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <div class="mb-3">
                     <label for="department" class="form-label">Department</label>
                     <input type="department" value="{{ old('department') }}" name="department" class="form-control"
