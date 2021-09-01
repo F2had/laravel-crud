@@ -21,6 +21,10 @@ class Student extends Model implements Auditable
         'nationality'
     ];
 
+    // protected $auditInclude = [];
+    // protected $auditExclude = [];
+
+
     public function courses()
     {
 

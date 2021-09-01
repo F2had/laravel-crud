@@ -29,6 +29,10 @@
                              href="/survey">Survey</a>
                      </li>
                      <li class="nav-item">
+                         <a class="nav-link {{ request()->is('report*') ? 'active' : '' }}" aria-current="page"
+                             href="/report">Report</a>
+                     </li>
+                     <li class="nav-item">
                          <a class="nav-link" aria-current="page" href="/logout"><span
                                  class="text-danger">Logout</span></a>
                      </li>

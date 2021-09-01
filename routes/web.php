@@ -20,6 +20,7 @@ use App\Http\Controllers\EnrollmentController;
 use  App\Http\Controllers\SurveyController;
 use  App\Http\Controllers\UserController;
 use  App\Http\Controllers\SessionController;
+use App\Http\Controllers\ReportController;
 
 Route::get('/', function () {
     return view('login');
@@ -73,3 +74,7 @@ Route::get('/survey/share/{id}', [SurveyController::class, 'share']);
 Route::post('/survey/share', [SurveyController::class, 'sendSurvey']);
 
 Route::resource('survey', SurveyController::class)->name('get', 'survey')->middleware('auth');
+
+
+Route::resource('report', ReportController::class)->middleware('auth');
+Route::post('report', [ReportController::class, 'studentsReport'])->middleware('auth');

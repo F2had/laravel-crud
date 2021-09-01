@@ -17,7 +17,8 @@ class StudentController extends Controller
      */
     public function index()
     {
-
+        // $student = Student::find('21');
+        // ddd($student->audits);
         $students = Student::paginate(50);
         return view('student.index', compact('students'));
     }
@@ -101,16 +102,16 @@ class StudentController extends Controller
 
 
         $student = Student::find($request->id);
-            $student->name = $request->name;
-            $student->email = $request->email;
-            $student->phone = $request->phone;
-            $student->age = $request->age;
-            $student->department = $request->department;
-            $student->address = $request->address;
-            $student->country = $request->country;
-            $student->nationality = $request->nationality;
-            $student->state = $request->state;
-            $student->save();
+        $student->name = $request->name;
+        $student->email = $request->email;
+        $student->phone = $request->phone;
+        $student->age = $request->age;
+        $student->department = $request->department;
+        $student->address = $request->address;
+        $student->country = $request->country;
+        $student->nationality = $request->nationality;
+        $student->state = $request->state;
+        $student->save();
 
         return redirect('student')->with('message', 'Student updated!');
     }
