@@ -44,10 +44,10 @@
     'charting_engine_html' => "NVD3",
 
     // Engine to use for pdf ..
-    'pdf_engine' => "fpdf",
+    'pdf_engine' => "tcpdf",
 
     // DOWNLOAD_SAME_WINDOW, DOWNLOAD_NEW_WINDOW, INLINE
-    'pdf_delivery_mode' => "DOWNLOAD_NEW_WINDOW",
+    'pdf_delivery_mode' => "DOWNLOAD_SAME_WINDOW",
 
     // Pathing for phantomjs
     'pdf_phantomjs_path' => base_path('vendor/bin/phantomjs'),
