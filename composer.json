@@ -22,7 +22,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.3",
         "owen-it/laravel-auditing": "^12.0",
-        "reportico/laravel-reportico": "^7.0"
+        "reportico/laravel-reportico": "^7.0",
+        "unicodeveloper/laravel-sessiontimeout": "1.0.x-dev"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
